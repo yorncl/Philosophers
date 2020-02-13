@@ -8,4 +8,6 @@ int		ft_strlen(char *str);
 void	ft_putstr_fd(int fd, char *str, int len);
 void	ft_putnbr_fd(int fd, int nb);
 
+
+int		main(int ac, char **av);
 #endif
