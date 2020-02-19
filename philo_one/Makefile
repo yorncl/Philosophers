@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 
 SRCS =	utils.c \
 		main.c \
@@ -10,7 +10,7 @@ OBJS = $(SRCS:%.c=%.o)
 
 NAME = philo_one
 
-INCLUDES = -I .
+INCLUDES = -I . -pthread
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
