@@ -18,12 +18,12 @@ void	ft_putstr_fd(int fd, char *str, int len)
 	write(fd, str, len);
 }
 //No neg for now
-void	ft_putnbr_fd(int fd, int nb)
+void	ft_putunsigned_fd(int fd, unsigned int nb)
 {
 	char c;
 
 	if (nb > 10)
-		ft_putnbr_fd(fd, nb / 10);
+		ft_putunsigned_fd(fd, nb / 10);
 	c = '0' + nb % 10;
 	write(fd, &c, 1 );
 }
