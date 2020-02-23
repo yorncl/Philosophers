@@ -28,6 +28,7 @@ typedef struct	s_p1
 	int				someonedied;
 	pthread_t		*threads;
 	pthread_mutex_t isdying;
+	pthread_mutex_t print_mutex;
 	pthread_mutex_t *forks;
 	t_params		*params;
 	struct timeval	time_start;
@@ -38,7 +39,7 @@ typedef struct	s_p1
 
 int		ft_strlen(char *str);
 void	ft_putstr_fd(int fd, char *str, int len);
-void	ft_putunsigned_fd(int fd, unsigned int nb);
+void	ft_putunsigned_fd(int fd, unsigned long long int nb);
 
 
 int		main(int ac, char **av);
