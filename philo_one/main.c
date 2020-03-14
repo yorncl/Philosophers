@@ -2,31 +2,20 @@
 
 #include <stdio.h>
 
-unsigned long int get_time(struct timeval *t)
+unsigned int get_timestamp(t_p1 *p)
 {
-	return ((unsigned long int)(t->tv_sec * 1000 + t->tv_usec / 1000));
+	gettimeofday(&p->time_now, 0);
+	return ((p->time_now.tv_sec * 1000 + p->time_now.tv_usec / 1000) - p->timestampstart);
 }
 
-unsigned int get_timestamp(t_params *p)
-{
-	gettimeofday(&p->p->time_now, 0);
-	return ((unsigned int)(get_time(&p->p->time_now) - get_time(&p->p->time_start)));
-}
-
-unsigned long long int get_timenow(t_params *p)
-{
-	gettimeofday(&p->p->time_now, 0);
-	return (get_time(&p->p->time_now));
-}
-
-void	print_msg(t_params *p, unsigned int id, char *string)
+void	print_msg(t_params *p, unsigned int id, char *string, int len)
 {
 	pthread_mutex_lock(&p->p->print_mutex);
-	ft_putunsigned_fd(1, get_timestamp(p));
+	ft_putunsigned_fd(1, get_timestamp(p->p));
+	//CHeck if someone has died
 	write(1, " ",1);
 	ft_putunsigned_fd(1, id);
-	write(1, " ",1);
-	ft_putstr_fd(1, string, ft_strlen(string));
+	ft_putstr_fd(1, string, len);
 	pthread_mutex_unlock(&p->p->print_mutex);
 }
 
@@ -40,7 +29,7 @@ void	get_forks(t_params *p)
 		pthread_mutex_lock(&p->p->forks[0]);
 	else
 		pthread_mutex_lock(&p->p->forks[id + 1]);
-	gettimeofday(&p->last_eaten, 0); // check for error ?
+	p->last_eaten = get_timestamp(p->p); // check for error ?
 }
 
 void	put_forks(t_params *p)
@@ -69,14 +58,15 @@ void	*a_monitor(void *arg)
 	unsigned int	tmp;
 	while (!p->p->someonedied)
 	{
-		tmp = get_timenow(p) - get_time(&p->last_eaten);
-		if (tmp >= (unsigned int)p->p->todie)
+		tmp = get_timestamp(p->p);
+		if (tmp  - p->last_eaten > p->p->todie)
 		{
-			pthread_mutex_lock(&p->p->isdying);
+			pthread_mutex_lock(&p->p->isdying); // protect while eating
 			if (!p->p->someonedied)
 			{
 				p->p->someonedied = 1;
-				print_msg(p, p->id, "is dying\n");
+				print_msg(p, p->id, " is dying\n", 10);
+				printf("Last eaten : %u | tmp: %u | diff: %u\n", p->last_eaten, tmp,  tmp - p->last_eaten);
 			}
 			pthread_mutex_unlock(&p->p->isdying);
 			break ;
@@ -89,25 +79,24 @@ void	*a_philo(void *arg)
 {
 	t_params *p;
 
-	p = (t_params*) arg;
-	gettimeofday(&p->last_eaten, 0); // check for error ?
+	p = (t_params*) arg; // check for error ?
 	pthread_create(&p->monitor, NULL, &a_monitor, arg);//check error ?
 	while (1)
 	{
 		get_forks(p);
 		if (p->p->someonedied)
 			break;
-		print_msg(p, p->id, "is eating\n");
+		print_msg(p, p->id, " is eating\n", 11);
 		usleep(p->p->toeat * 1000);
 		put_forks(p);
 		p->nbmeal++;
 		if (p->p->someonedied || is_full(p))
 			break;
-		print_msg(p, p->id, "is sleeping\n");
+		print_msg(p, p->id, " is sleeping\n", 13);
 		usleep(p->p->tosleep * 1000);
 		if (p->p->someonedied)
 			break;
-		print_msg(p, p->id, "is thinking\n");
+		print_msg(p, p->id, " is thinking\n", 13);
 	}
 	pthread_join(p->monitor, 0);
 	return (0);
@@ -131,18 +120,24 @@ int		init_threads(t_p1 *p)
 		(&p->params[i])->id = i;
 		(&p->params[i])->nbmeal = 0;
 		(&p->params[i])->p = p;
+		(&p->params[i])->last_eaten = 0;
 	}
 	p->threads = malloc(sizeof(pthread_t) * p->nb); // CHECK FOR ERROR
 	i = -1;
+	gettimeofday(&p->time_start, 0);
+	p->timestampstart = get_timestamp(p);
 	while (++i < p->nb)
+	{
 		pthread_create(
 					&p->threads[i], NULL, &a_philo, (void*)&p->params[i]);
+		usleep(100);
+	}
 	return (0);
 }
 
-int		ft_atoi(char *s)
+unsigned int	ft_atoi(char *s)
 {
-	int r;
+	unsigned int r;
 
 	r = 0;
 	while (*s >= '0' && *s <= '9')
@@ -166,7 +161,6 @@ void	parse_arg(t_p1 *p, char **av)
 	
 }
 
-
 int		main(int ac, char **av)
 {
 	t_p1			philo;
@@ -176,7 +170,6 @@ int		main(int ac, char **av)
 		return (-1);
 	parse_arg(&philo, av); // CHECK IF 0
 	pthread_mutex_init(&philo.print_mutex, 0);
-	gettimeofday(&philo.time_start, 0);
 	printf("OK ARGS nb:%d todie:%d toeat:%d tosleep:%d musteat:%d\n", philo.nb, philo.todie, philo.toeat, philo.tosleep, philo.musteat);
 	init_threads(&philo);
 	i =-1;

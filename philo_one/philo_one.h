@@ -12,7 +12,7 @@ typedef struct	s_params
 {
 	int				id;
 	int				nbmeal;
-	struct timeval	last_eaten;
+	unsigned int	last_eaten;
 	t_p1			*p;
 	pthread_t		monitor;
 }				t_params;
@@ -21,9 +21,9 @@ typedef struct	s_p1
 {
 	int				start;
 	int				nb;
-	int				todie;
-	int				toeat;
-	int				tosleep;
+	unsigned int	todie;
+	unsigned int	toeat;
+	unsigned int	tosleep;
 	int				musteat;
 	int				someonedied;
 	pthread_t		*threads;
@@ -32,6 +32,7 @@ typedef struct	s_p1
 	pthread_mutex_t *forks;
 	t_params		*params;
 	struct timeval	time_start;
+	unsigned long int timestampstart;
 	struct timeval	time_now;
 }				t_p1;
 
