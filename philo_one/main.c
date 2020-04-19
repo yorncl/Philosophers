@@ -72,6 +72,7 @@ void	*a_monitor(void *arg)
 			pthread_mutex_unlock(&p->p->isdying);
 			break ;
 		}
+		usleep(8000);
 	}
 	return (0);
 }
