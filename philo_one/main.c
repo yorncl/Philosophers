@@ -12,7 +12,7 @@ void	print_msg(t_params *p, unsigned int id, char *string, int len)
 {
 	pthread_mutex_lock(&p->p->print_mutex);
 	ft_putunsigned_fd(1, get_timestamp(p->p));
-	//CHeck if someone has died
+	//Check if someone has died
 	write(1, " ",1);
 	ft_putunsigned_fd(1, id);
 	ft_putstr_fd(1, string, len);
@@ -53,20 +53,21 @@ int is_full(t_params *p)
 void	*a_monitor(void *arg)
 {
 	t_params *p;
+	// unsigned int	tmp;
 
 	p = (t_params*) arg;
-	unsigned int	tmp;
 	while (!p->p->someonedied)
 	{
-		tmp = get_timestamp(p->p);
-		if (tmp  - p->last_eaten > p->p->todie)
+		// tmp = get_timestamp(p->p);
+		if (get_timestamp(p->p)  - p->last_eaten > p->p->todie)
 		{
+			// printf("Last eaten : %u | tmp: %u | diff: %u\n", p->last_eaten, tmp,  tmp - p->last_eaten);
 			pthread_mutex_lock(&p->p->isdying); // protect while eating
 			if (!p->p->someonedied)
 			{
 				p->p->someonedied = 1;
 				print_msg(p, p->id, " is dying\n", 10);
-				printf("Last eaten : %u | tmp: %u | diff: %u\n", p->last_eaten, tmp,  tmp - p->last_eaten);
+				// printf("Last eaten : %u | tmp: %u | diff: %u\n", p->last_eaten, tmp,  tmp - p->last_eaten);
 			}
 			pthread_mutex_unlock(&p->p->isdying);
 			break ;
@@ -130,7 +131,7 @@ int		init_threads(t_p1 *p)
 	{
 		pthread_create(
 					&p->threads[i], NULL, &a_philo, (void*)&p->params[i]);
-		usleep(100);
+		usleep(1000);
 	}
 	return (0);
 }
