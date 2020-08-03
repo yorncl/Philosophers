@@ -38,10 +38,19 @@ typedef struct	s_p1
 
 
 
-int		ft_strlen(char *str);
-void	ft_putstr_fd(int fd, char *str, int len);
-void	ft_putunsigned_fd(int fd, unsigned long long int nb);
+int				ft_strlen(char *str);
+void			ft_putstr_fd(int fd, char *str, int len);
+void			ft_putunsigned_fd(int fd, unsigned long long int nb);
+unsigned int	ft_atoi(char *s);
+unsigned int 	get_timestamp(t_p1 *p);
 
+int				init_params(t_p1 *p);
+int				init_threads(t_p1 *p);
+void			free_params(t_p1 *p);
 
-int		main(int ac, char **av);
+void			print_msg(t_params *p, unsigned int id, char *string, int len);
+
+void			*a_monitor(void *arg);
+
+void			*a_philo(void *arg);
 #endif
