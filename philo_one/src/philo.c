@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/08/03 11:36:36 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/03 13:20:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	get_forks(t_params *p)
 
 	id = p->id;
 	pthread_mutex_lock(&p->p->forks[id]);	
-	if (id == p->p->nb - 1)
+	if (id + 1 == p->p->nb)
 		pthread_mutex_lock(&p->p->forks[0]);
 	else
 		pthread_mutex_lock(&p->p->forks[id + 1]);
@@ -40,7 +40,12 @@ static void	put_forks(t_params *p)
 
 static int	is_full(t_params *p)
 {
-	return (p->nbmeal == p->p->musteat && p->p->musteat != -1);
+	if (p->nbmeal == p->p->musteat && p->p->musteat != -1)
+	{
+		p->p->someonefull = 1;
+		return (1);
+	}
+	return (0);
 }
 
 void	*a_philo(void *arg)

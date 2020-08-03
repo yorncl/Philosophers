@@ -26,6 +26,7 @@ typedef struct	s_p1
 	unsigned int	tosleep;
 	int				musteat;
 	int				someonedied;
+	int				someonefull;
 	pthread_t		*threads;
 	pthread_mutex_t isdying;
 	pthread_mutex_t print_mutex;
@@ -44,7 +45,6 @@ void			ft_putunsigned_fd(int fd, unsigned long long int nb);
 unsigned int	ft_atoi(char *s);
 unsigned int 	get_timestamp(t_p1 *p);
 
-int				init_params(t_p1 *p);
 int				init_threads(t_p1 *p);
 void			free_params(t_p1 *p);
 

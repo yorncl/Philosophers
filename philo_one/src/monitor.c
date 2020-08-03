@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:30:43 by user42            #+#    #+#             */
-/*   Updated: 2020/08/03 11:36:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/03 13:04:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*a_monitor(void *arg)
 	t_params *p;
 
 	p = (t_params*) arg;
-	while (!p->p->someonedied)
+	while (!p->p->someonedied && !p->p->someonefull)
 	{
 		if (get_timestamp(p->p)  - p->last_eaten > p->p->todie)
 		{

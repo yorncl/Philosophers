@@ -26,19 +26,24 @@ static void	parse_arg(t_p1 *p, char **av)
 	
 }
 
+
 #include <stdio.h>
 int		main(int ac, char **av)
 {
 	t_p1			philo;
 	int				i;
 
-	if (ac < 5)
+	if (ac < 5 || ac > 6)
+	{
+		write(2, "INVALID NUMBER OF ARGUMENTS\n", 21);
 		return (-1);
+	}
 	parse_arg(&philo, av); // CHECK IF 0
 	pthread_mutex_init(&philo.print_mutex, 0);
 	printf("OK ARGS nb:%d todie:%d toeat:%d tosleep:%d musteat:%d\n", philo.nb, philo.todie, philo.toeat, philo.tosleep, philo.musteat);
-	init_threads(&philo);
-	i =-1;
+	if (init_threads(&philo))
+		write(2, "AN ERROR HAS OCCURED\n", 21);
+	i = -1;
 	while (++i < philo.nb)
 		pthread_join(philo.threads[i], 0);
 	free_params(&philo);
