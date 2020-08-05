@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/08/05 23:32:53 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/05 23:50:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void		parse_arg(t_p2 *p, char **av)
 		p->musteat = ft_atoi(av[5]);
 	else
 		p->musteat = -1;
-	
 }
 
 static int		are_numbers(int ac, char **av)
@@ -42,7 +41,6 @@ static int		are_numbers(int ac, char **av)
 	return (1);
 }
 
-#include <stdio.h>
 int				main(int ac, char **av)
 {
 	t_p2	philo;
@@ -58,9 +56,9 @@ int				main(int ac, char **av)
 		write(2, "INVALID ARGUMENTS\n", 18);
 		return (-1);
 	}
-	if ((philo.print_sem = sem_open("print_sem", O_CREAT, 777, 1)) == SEM_FAILED)
+	if ((philo.print_sem = sem_open("print", O_CREAT, 777, 1)) == SEM_FAILED)
 		return (-1);
-	sem_unlink("print_sem");
+	sem_unlink("print");
 	parse_arg(&philo, av);
 	if (init_threads(&philo))
 		write(2, "AN ERROR HAS OCCURED\n", 21);
