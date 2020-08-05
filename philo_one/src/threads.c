@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2020/08/03 13:49:05 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/03 14:03:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	init_params(t_p1 *p)
 	p->someonefull = 0;
 	p->forks = malloc(sizeof(pthread_mutex_t) * p->nb);
 	while (++i < p->nb)
-		if  (pthread_mutex_init(&p->forks[i], 0))
+		if (pthread_mutex_init(&p->forks[i], 0))
 			return (-1);
 	i = -1;
 	if ((p->params = malloc(sizeof(t_params) * p->nb)) == 0)
@@ -56,7 +56,7 @@ int			init_threads(t_p1 *p)
 	{
 		pthread_create(
 					&p->threads[i], NULL, &a_philo, (void*)&p->params[i]);
-		i +=2;
+		i += 2;
 	}
 	usleep(p->nb * 5000);
 	i = 1;
@@ -64,12 +64,12 @@ int			init_threads(t_p1 *p)
 	{
 		pthread_create(
 					&p->threads[i], NULL, &a_philo, (void*)&p->params[i]);
-		i +=2;
+		i += 2;
 	}
 	return (0);
 }
 
-void	free_params(t_p1 *p)
+void		free_params(t_p1 *p)
 {
 	int			i;
 

@@ -6,14 +6,13 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/08/03 11:25:59 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/05 22:59:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo_one.h>
 
-
-static void	parse_arg(t_p1 *p, char **av)
+static void		parse_arg(t_p1 *p, char **av)
 {
 	p->nb = ft_atoi(av[1]);
 	p->todie = ft_atoi(av[2]);
@@ -26,21 +25,41 @@ static void	parse_arg(t_p1 *p, char **av)
 	
 }
 
+static int		are_numbers(int ac, char **av)
+{
+	int i;
+
+	while (--ac > 0)
+	{
+		i = 0;
+		while (av[ac][i])
+		{
+			if (av[ac][i] < '0' || av[ac][i] > '9')
+				return (0);
+			i++;
+		}
+	}
+	return (1);
+}
 
 #include <stdio.h>
-int		main(int ac, char **av)
+int				main(int ac, char **av)
 {
-	t_p1			philo;
-	int				i;
+	t_p1	philo;
+	int		i;
 
 	if (ac < 5 || ac > 6)
 	{
 		write(2, "INVALID NUMBER OF ARGUMENTS\n", 21);
 		return (-1);
 	}
-	parse_arg(&philo, av); // CHECK IF 0
+	if (!are_numbers(ac, av))
+	{
+		write(2, "INVALID ARGUMENTS\n", 18);
+		return (-1);
+	}
+	parse_arg(&philo, av);
 	pthread_mutex_init(&philo.print_mutex, 0);
-	printf("OK ARGS nb:%d todie:%d toeat:%d tosleep:%d musteat:%d\n", philo.nb, philo.todie, philo.toeat, philo.tosleep, philo.musteat);
 	if (init_threads(&philo))
 		write(2, "AN ERROR HAS OCCURED\n", 21);
 	i = -1;
