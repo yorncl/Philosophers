@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/08/05 22:59:11 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/05 23:44:58 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void		parse_arg(t_p1 *p, char **av)
 		p->musteat = ft_atoi(av[5]);
 	else
 		p->musteat = -1;
-	
 }
 
 static int		are_numbers(int ac, char **av)
@@ -42,7 +41,6 @@ static int		are_numbers(int ac, char **av)
 	return (1);
 }
 
-#include <stdio.h>
 int				main(int ac, char **av)
 {
 	t_p1	philo;
