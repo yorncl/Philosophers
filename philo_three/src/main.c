@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/08/06 00:46:22 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/19 15:18:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int		are_numbers(int ac, char **av)
 int				main(int ac, char **av)
 {
 	t_p3	philo;
-	int		i;
 
 	if (ac < 5 || ac > 6)
 	{
@@ -62,9 +61,7 @@ int				main(int ac, char **av)
 	parse_arg(&philo, av);
 	if (init_processes(&philo))
 		write(2, "AN ERROR HAS OCCURED\n", 21);
-	i = -1;
-	while (++i < philo.nb)
-		pthread_join(philo.processes[i], 0);
+	wait_processes(&philo);
 	free_params(&philo);
 	return (0);
 }

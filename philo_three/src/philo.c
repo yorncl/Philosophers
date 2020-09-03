@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/08/06 00:47:50 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/19 15:18:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,17 @@ static void		put_forks(t_params *p)
 
 static int		is_full(t_params *p)
 {
-	if (p->nbmeal == p->p->musteat && p->p->musteat != -1)
+	if (p->p->musteat != -1 && p->nbmeal == p->p->musteat)
 	{
-		p->p->someonefull = 1;
+		p->p->isfull = 1;
 		return (1);
 	}
 	return (0);
 }
 
-void			*a_philo(void *arg)
+int				a_philo(t_params *p)
 {
-	t_params *p;
-
-	p = (t_params*)arg;
-	pthread_create(&p->monitor, NULL, &a_monitor, arg);
+	pthread_create(&p->monitor, NULL, &a_monitor, p);
 	while (1)
 	{
 		get_forks(p);
@@ -59,5 +56,6 @@ void			*a_philo(void *arg)
 		print_msg(p, p->id, " is thinking\n", 13);
 	}
 	pthread_join(p->monitor, 0);
-	exit(0);
+	return (p->p->someonedied ? IDIED : 0);
 }
+

@@ -22,8 +22,8 @@ static int	init_params(t_p3 *p)
 		return (-1);
 	sem_unlink("isdying");
 	sem_unlink("forks");
+	p->isfull = 0;
 	p->someonedied = 0;
-	p->someonefull = 0;
 	i = -1;
 	if ((p->params = malloc(sizeof(t_params) * p->nb)) == 0)
 		return (-1);
@@ -53,10 +53,10 @@ int			init_processes(t_p3 *p)
 	i = 0;
 	while (i < p->nb)
 	{
-		p->processes[i] = fork()
+		p->processes[i] = fork();
 		if (p->processes[i] == 0)
 		{
-			a_philo(p->params[i]);
+			exit(a_philo(&p->params[i]));
 		}
 		else if (p->processes[i] == -1)
 		{
@@ -68,10 +68,24 @@ int			init_processes(t_p3 *p)
 	return (0);
 }
 
-// int			kill_processes(t_p3 *p)
-// {
-// 	while ()
-// }
+void	wait_processes(t_p3 *p)
+{
+	int i;
+	int status;
+
+	i = -1;
+	while (++i < p->nb)
+	{
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == IDIED)
+		{
+			i = -1;
+			while (++i < p->nb)
+				kill(p->processes[i], SIGINT);
+			break ;
+		}
+	}
+}
 
 void		free_params(t_p3 *p)
 {

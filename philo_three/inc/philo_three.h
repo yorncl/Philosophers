@@ -20,6 +20,11 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <semaphore.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
+
+# define IDIED 151
 
 typedef struct s_p3		t_p3;
 
@@ -40,12 +45,12 @@ struct			s_p3
 	unsigned int		toeat;
 	unsigned int		tosleep;
 	int					musteat;
-	int					someonedied;
-	int					someonefull;
 	pid_t				*processes;
-	sem_t				*isdying;
+	int					isfull;
+	int					someonedied;
 	sem_t				*forks;
 	sem_t				*print_sem;
+	sem_t				*isdying;
 	t_params			*params;
 	struct timeval		time_start;
 	unsigned long int	timestampstart;
@@ -59,11 +64,12 @@ unsigned int	ft_atoi(char *s);
 unsigned int	get_timestamp(t_p3 *p);
 
 int				init_processes(t_p3 *p);
+void			wait_processes(t_p3 *p);
 void			free_params(t_p3 *p);
 
 void			print_msg(t_params *p, unsigned int id, char *string, int len);
 
 void			*a_monitor(void *arg);
 
-void			*a_philo(void *arg);
+int				a_philo(t_params *p);
 #endif
