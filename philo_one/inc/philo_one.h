@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/09/03 22:52:11 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/03 23:19:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ struct			s_p1
 	unsigned long int	timestampstart;
 }				t_p1;
 
-t_p1			g_philo;
+struct s_p1		g_philo;
 
 int				ft_strlen(char *str);
 void			ft_putstr_fd(int fd, char *str, int len);
@@ -52,7 +52,7 @@ void			ft_putunsigned_fd(int fd, unsigned long long int nb);
 unsigned int	ft_atoi(char *s);
 unsigned int	get_timestamp();
 
-int				init_threads();
+int				launch_sim();
 
 void			print_msg(unsigned int id, char *string, int len);
 
