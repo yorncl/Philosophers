@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:59 by user42            #+#    #+#             */
-/*   Updated: 2020/08/03 14:05:46 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/03 21:47:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ unsigned int	ft_atoi(char *s)
 	return (r);
 }
 
-unsigned int	get_timestamp(t_p1 *p)
+unsigned int	get_timestamp()
 {
-	gettimeofday(&p->time_now, 0);
-	return ((p->time_now.tv_sec * 1000 + p->time_now.tv_usec / 1000)
-			- p->timestampstart);
+	gettimeofday(&g_time_now, 0);
+	return ((g.philo.g_time_now.tv_sec * 1000 + g.philo.g_time_now.tv_usec / 1000)
+			- g_philo.timestampstart);
 }

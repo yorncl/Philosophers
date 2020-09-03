@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/08/05 23:47:31 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/03 22:35:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,21 @@
 
 static void		get_forks(t_params *p)
 {
-	int id;
-
-	id = p->id;
-	pthread_mutex_lock(&p->p->forks[id]);
-	if (id + 1 == p->p->nb)
-		pthread_mutex_lock(&p->p->forks[0]);
+	pthread_mutex_lock(&g_philo.forks[p->id]);
+	if (p->id + 1 == g_philo.nb)
+		pthread_mutex_lock(&g_philo.forks[0]);
 	else
-		pthread_mutex_lock(&p->p->forks[id + 1]);
+		pthread_mutex_lock(&g_philo.forks[p->id + 1]);
 	p->last_eaten = get_timestamp(p->p);
 }
 
 static void		put_forks(t_params *p)
 {
-	int id;
-
-	id = p->id;
-	pthread_mutex_unlock(&p->p->forks[id]);
-	if (id == p->p->nb - 1)
-		pthread_mutex_unlock(&p->p->forks[0]);
+	pthread_mutex_unlock(&g_philo.forks[p->id]);
+	if (p->id == g_philo.nb - 1)
+		pthread_mutex_unlock(&g_philo.forks[0]);
 	else
-		pthread_mutex_unlock(&p->p->forks[id + 1]);
-}
-
-static int		is_full(t_params *p)
-{
-	if (p->nbmeal == p->p->musteat && p->p->musteat != -1)
-	{
-		p->p->someonefull = 1;
-		return (1);
-	}
-	return (0);
+		pthread_mutex_unlock(&g_philo.forks[p->id + 1]);
 }
 
 void			*a_philo(void *arg)
@@ -52,22 +36,16 @@ void			*a_philo(void *arg)
 	t_params *p;
 
 	p = (t_params*)arg;
-	pthread_create(&p->monitor, NULL, &a_monitor, arg);
 	while (1)
 	{
 		get_forks(p);
-		if (p->p->someonedied)
-			break ;
 		print_msg(p, p->id, " is eating\n", 11);
-		usleep(p->p->toeat * 1000);
+		usleep(g_philo.time_to_eat * 1000);
 		put_forks(p);
-		p->nbmeal++;
-		if (p->p->someonedied || is_full(p))
+		if (p->nbmeal == g_philo.nb_musteat && g_philo.nb_musteat != -1)
 			break ;
 		print_msg(p, p->id, " is sleeping\n", 13);
-		usleep(p->p->tosleep * 1000);
-		if (p->p->someonedied)
-			break ;
+		usleep(g_philo.time_to_sleep * 1000);
 		print_msg(p, p->id, " is thinking\n", 13);
 	}
 	pthread_join(p->monitor, 0);
