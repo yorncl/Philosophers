@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/09/03 23:19:06 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/14 13:11:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct	s_params
 
 struct			s_p1
 {
-	int					nb_of_philo;
+	int					nb_philo;
 	unsigned int		time_to_die;
 	unsigned int		time_to_eat;
 	unsigned int		time_to_sleep;
@@ -45,6 +45,11 @@ struct			s_p1
 }				t_p1;
 
 struct s_p1		g_philo;
+
+
+
+#include <stdio.h>
+
 
 int				ft_strlen(char *str);
 void			ft_putstr_fd(int fd, char *str, int len);

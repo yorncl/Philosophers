@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:59 by user42            #+#    #+#             */
-/*   Updated: 2020/09/03 23:35:10 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/14 13:07:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,20 @@
 // 	return (len);
 // }
 
-// void			ft_putstr_fd(int fd, char *str, int len)
-// {
-// 	write(fd, str, len);
-// }
+void			ft_putstr_fd(int fd, char *str, int len)
+{
+	write(fd, str, len);
+}
 
-// void			ft_putunsigned_fd(int fd, unsigned long long int nb)
-// {
-// 	char c;
+void			ft_putunsigned_fd(int fd, unsigned long long int nb)
+{
+	char c;
 
-// 	if (nb >= 10)
-// 		ft_putunsigned_fd(fd, nb / 10);
-// 	c = '0' + nb % 10;
-// 	write(fd, &c, 1);
-// }
+	if (nb >= 10)
+		ft_putunsigned_fd(fd, nb / 10);
+	c = '0' + nb % 10;
+	write(fd, &c, 1);
+}
 
 unsigned int	ft_atoi(char *s)
 {
