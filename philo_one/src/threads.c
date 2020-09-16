@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2020/09/17 00:09:38 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/17 00:34:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		init_params(void)
 	}
 }
 
-static int		init_threads(void)
+static void		init_threads(void)
 {
 	int			i;
 
@@ -48,7 +48,6 @@ static int		init_threads(void)
 						&a_monitor, (void*)&g_philo.params[i]);
 		i += 2;
 	}
-	return (0);
 }
 
 static void		join_threads(void)
@@ -63,10 +62,9 @@ static void		join_threads(void)
 	}
 }
 
-int				launch_sim(void)
+void			launch_sim(void)
 {
 	init_params();
 	init_threads();
 	join_threads();
-	return (0);
 }

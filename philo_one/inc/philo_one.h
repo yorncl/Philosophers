@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/09/16 23:55:12 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/17 00:34:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int				ft_strlen(char *str);
 unsigned int	ft_atoi(char *s);
 unsigned int	get_timestamp(void);
 
-int				launch_sim();
+void			launch_sim();
 
 void			print_msg(unsigned int id, t_message msg);
 
