@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/09/17 00:34:12 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/17 00:55:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ typedef struct	s_params
 struct			s_p1
 {
 	int					nb_philo;
-	unsigned int		time_to_die;
-	unsigned int		time_to_eat;
-	unsigned int		time_to_sleep;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
 	int					nb_musteat;
 	int					someonedied;
 	pthread_t			*monitors;
