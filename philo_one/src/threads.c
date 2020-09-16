@@ -6,13 +6,13 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2020/09/14 13:40:47 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/17 00:09:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo_one.h>
 
-static void	init_params()
+static void		init_params(void)
 {
 	int i;
 
@@ -23,7 +23,7 @@ static void	init_params()
 	}
 }
 
-static	int	init_threads()
+static int		init_threads(void)
 {
 	int			i;
 
@@ -32,26 +32,26 @@ static	int	init_threads()
 	i = 0;
 	while (i < g_philo.nb_philo)
 	{
-		pthread_create(
-					&g_philo.philosophers[i], NULL, &a_philo, (void*)&g_philo.params[i]);
-		pthread_create(
-					&g_philo.monitors[i], NULL, &a_monitor, (void*)&g_philo.params[i]);
+		pthread_create(&g_philo.philosophers[i], NULL,
+						&a_philo, (void*)&g_philo.params[i]);
+		pthread_create(&g_philo.monitors[i], NULL,
+						&a_monitor, (void*)&g_philo.params[i]);
 		i += 2;
 	}
 	usleep(g_philo.nb_philo * 5000);
 	i = 1;
 	while (i < g_philo.nb_philo)
 	{
-		pthread_create(
-					&g_philo.philosophers[i], NULL, &a_philo, (void*)&g_philo.params[i]);
-		pthread_create(
-					&g_philo.monitors[i], NULL, &a_monitor, (void*)&g_philo.params[i]);
+		pthread_create(&g_philo.philosophers[i], NULL,
+						&a_philo, (void*)&g_philo.params[i]);
+		pthread_create(&g_philo.monitors[i], NULL,
+						&a_monitor, (void*)&g_philo.params[i]);
 		i += 2;
 	}
 	return (0);
 }
 
-static void		join_threads()
+static void		join_threads(void)
 {
 	int i;
 
@@ -63,10 +63,10 @@ static void		join_threads()
 	}
 }
 
-int				launch_sim()
+int				launch_sim(void)
 {
 	init_params();
-	init_threads(); // check error
+	init_threads();
 	join_threads();
 	return (0);
 }

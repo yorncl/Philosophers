@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/09/14 13:11:40 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/16 23:55:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,27 @@ struct			s_p1
 	t_params			*params;
 	struct timeval		time_now;
 	unsigned long int	timestampstart;
+	char				output[4096];
 }				t_p1;
+
+typedef	enum	e_message
+{
+	DIE,
+	TAKE_FORK,
+	THINK,
+	EAT,
+	SLEEP
+}				t_message;
 
 struct s_p1		g_philo;
 
-
-
-#include <stdio.h>
-
-
 int				ft_strlen(char *str);
-void			ft_putstr_fd(int fd, char *str, int len);
-void			ft_putunsigned_fd(int fd, unsigned long long int nb);
 unsigned int	ft_atoi(char *s);
-unsigned int	get_timestamp();
+unsigned int	get_timestamp(void);
 
 int				launch_sim();
 
-void			print_msg(unsigned int id, char *string, int len);
+void			print_msg(unsigned int id, t_message msg);
 
 void			*a_monitor(void *arg);
 

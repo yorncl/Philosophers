@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/09/14 14:11:40 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/17 00:13:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 static void		get_forks(t_params *p)
 {
 	pthread_mutex_lock(&g_philo.forks[p->id]);
+	print_msg(p->id, TAKE_FORK);
 	if (p->id + 1 == g_philo.nb_philo)
 		pthread_mutex_lock(&g_philo.forks[0]);
 	else
 		pthread_mutex_lock(&g_philo.forks[p->id + 1]);
 	p->last_eaten = get_timestamp();
+	print_msg(p->id, TAKE_FORK);
+	p->nbmeal++;
 }
 
 static void		put_forks(t_params *p)
@@ -39,14 +42,14 @@ void			*a_philo(void *arg)
 	while (!g_philo.someonedied)
 	{
 		get_forks(p);
-		print_msg(p->id, " is eating\n", 11);
+		print_msg(p->id, EAT);
 		usleep(g_philo.time_to_eat * 1000);
 		put_forks(p);
 		if (p->nbmeal == g_philo.nb_musteat && g_philo.nb_musteat != -1)
 			break ;
-		print_msg(p->id, " is sleeping\n", 13);
+		print_msg(p->id, SLEEP);
 		usleep(g_philo.time_to_sleep * 1000);
-		print_msg(p->id, " is thinking\n", 13);
+		print_msg(p->id, THINK);
 	}
 	return (0);
 }

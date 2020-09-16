@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/09/14 14:12:03 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/17 00:16:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,6 @@ static int		are_numbers(int ac, char **av)
 				return (0);
 			i++;
 		}
-	}
-	return (1);
-}
-
-static int		are_valid(int ac, char ** av)
-{
-	if (ac < 5 || ac > 6)
-	{
-		write(2, "INVALID NUMBER OF ARGUMENTS\n", 21);
-		return (0);
-	}
-	if (!are_numbers(ac, av))
-	{
-		write(2, "INVALID ARGUMENTS\n", 18);
-		return (0);
 	}
 	return (1);
 }
@@ -97,8 +82,16 @@ static void		destroy_global()
 
 int				main(int ac, char **av)
 {
-	if (!are_valid(ac, av))
+	if (ac < 5 || ac > 6)
+	{
+		write(2, "INVALID NUMBER OF ARGUMENTS\n", 21);
 		return (1);
+	}
+	if (!are_numbers(ac, av))
+	{
+		write(2, "INVALID ARGUMENTS\n", 18);
+		return (1);
+	}
 	init_global(av); // check error
 	launch_sim(); // check error
 	destroy_global();
