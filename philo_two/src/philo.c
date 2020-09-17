@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/08/05 23:51:15 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/17 15:52:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,18 @@
 
 static void		get_forks(t_params *p)
 {
-	sem_wait(p->p->forks);
-	sem_wait(p->p->forks);
-	p->last_eaten = get_timestamp(p->p);
+	sem_wait(g_philo.forks);
+	print_msg(p->id, TAKE_FORK);
+	sem_wait(g_philo.forks);
+	p->last_eaten = get_timestamp();
+	print_msg(p->id, TAKE_FORK);
+	p->nbmeal++;
 }
 
-static void		put_forks(t_params *p)
+static void		put_forks()
 {
-	sem_post(p->p->forks);
-	sem_post(p->p->forks);
-}
-
-static int		is_full(t_params *p)
-{
-	if (p->nbmeal == p->p->musteat && p->p->musteat != -1)
-	{
-		p->p->someonefull = 1;
-		return (1);
-	}
-	return (0);
+	sem_post(g_philo.forks);
+	sem_post(g_philo.forks);
 }
 
 void			*a_philo(void *arg)
@@ -40,24 +33,17 @@ void			*a_philo(void *arg)
 	t_params *p;
 
 	p = (t_params*)arg;
-	pthread_create(&p->monitor, NULL, &a_monitor, arg);
-	while (1)
+	while (!g_philo.someonedied)
 	{
 		get_forks(p);
-		if (p->p->someonedied)
+		print_msg(p->id, EAT);
+		usleep(g_philo.time_to_eat * 1000);
+		put_forks();
+		if (p->nbmeal == g_philo.nb_musteat && g_philo.nb_musteat != -1)
 			break ;
-		print_msg(p, p->id, " is eating\n", 11);
-		usleep(p->p->toeat * 1000);
-		put_forks(p);
-		p->nbmeal++;
-		if (p->p->someonedied || is_full(p))
-			break ;
-		print_msg(p, p->id, " is sleeping\n", 13);
-		usleep(p->p->tosleep * 1000);
-		if (p->p->someonedied)
-			break ;
-		print_msg(p, p->id, " is thinking\n", 13);
+		print_msg(p->id, SLEEP);
+		usleep(g_philo.time_to_sleep * 1000);
+		print_msg(p->id, THINK);
 	}
-	pthread_join(p->monitor, 0);
 	return (0);
 }

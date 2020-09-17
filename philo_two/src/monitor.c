@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:30:43 by user42            #+#    #+#             */
-/*   Updated: 2020/08/05 23:39:08 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/17 15:57:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,13 @@ void	*a_monitor(void *arg)
 	t_params *p;
 
 	p = (t_params*)arg;
-	while (!p->p->someonedied && !p->p->someonefull)
+	while (!g_philo.someonedied && p->nbmeal != g_philo.nb_musteat)
 	{
-		if (get_timestamp(p->p) - p->last_eaten > p->p->todie)
+		if (get_timestamp() > g_philo.time_to_die + p->last_eaten)
 		{
-			sem_wait(p->p->isdying);
-			if (!p->p->someonedied)
-			{
-				p->p->someonedied = 1;
-				print_msg(p, p->id, " is dying\n", 10);
-			}
-			sem_post(p->p->isdying);
+			sem_wait(g_philo.isdying);
+			print_msg(p->id, DIE);
+			sem_post(g_philo.isdying);
 			break ;
 		}
 		usleep(2000);

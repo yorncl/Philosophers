@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/08/05 23:49:10 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/17 15:51:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,55 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
-# include <fcntl.h>
-# include <sys/stat.h>
+# include <string.h>
 # include <semaphore.h>
-
-typedef struct s_p2		t_p2;
+#include <fcntl.h>
+#include <fcntl.h>
 
 typedef struct	s_params
 {
 	int				id;
 	int				nbmeal;
 	unsigned int	last_eaten;
-	t_p2			*p;
-	pthread_t		monitor;
 }				t_params;
 
-struct			s_p2
+struct			s_p1
 {
-	int					start;
-	int					nb;
-	unsigned int		todie;
-	unsigned int		toeat;
-	unsigned int		tosleep;
-	int					musteat;
+	int					nb_philo;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					nb_musteat;
 	int					someonedied;
-	int					someonefull;
-	pthread_t			*threads;
+	pthread_t			*monitors;
+	pthread_t			*philosophers;
 	sem_t				*isdying;
+	sem_t				*print_mutex;
 	sem_t				*forks;
-	sem_t				*print_sem;
 	t_params			*params;
-	struct timeval		time_start;
-	unsigned long int	timestampstart;
 	struct timeval		time_now;
-};
+	unsigned long int	timestampstart;
+	char				output[4096];
+}				t_p1;
+
+typedef	enum	e_message
+{
+	DIE,
+	TAKE_FORK,
+	THINK,
+	EAT,
+	SLEEP
+}				t_message;
+
+struct s_p1		g_philo;
 
 int				ft_strlen(char *str);
-void			ft_putstr_fd(int fd, char *str, int len);
-void			ft_putunsigned_fd(int fd, unsigned long long int nb);
 unsigned int	ft_atoi(char *s);
-unsigned int	get_timestamp(t_p2 *p);
+unsigned int	get_timestamp(void);
 
-int				init_threads(t_p2 *p);
-void			free_params(t_p2 *p);
+void			launch_sim();
 
-void			print_msg(t_params *p, unsigned int id, char *string, int len);
+void			print_msg(unsigned int id, t_message msg);
 
 void			*a_monitor(void *arg);
 
