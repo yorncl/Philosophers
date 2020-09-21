@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/09/17 15:58:36 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/21 16:09:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static int		init_global(void)
 	g_philo.philosophers = malloc(sizeof(pthread_t) * g_philo.nb_philo);
 	g_philo.params = malloc(sizeof(t_params) * g_philo.nb_philo);
 	memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
-	g_philo.forks = malloc(sizeof(pthread_mutex_t) * g_philo.nb_philo);
 	if (!g_philo.monitors || !g_philo.philosophers
 					|| !g_philo.params || !g_philo.forks)
 		return (1);
@@ -102,7 +101,6 @@ static void		destroy_global(void)
 	if (g_philo.params)
 		memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
 	free(g_philo.params);
-	free(g_philo.forks);
 	memset(&g_philo, 0, sizeof(t_p1));
 }
 
