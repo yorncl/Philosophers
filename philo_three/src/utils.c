@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:59 by user42            #+#    #+#             */
-/*   Updated: 2020/08/19 15:18:42 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/21 18:34:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,6 @@ int				ft_strlen(char *str)
 	return (len);
 }
 
-void			ft_putstr_fd(int fd, char *str, int len)
-{
-	write(fd, str, len);
-}
-
-void			ft_putunsigned_fd(int fd, unsigned long long int nb)
-{
-	char c;
-
-	if (nb >= 10)
-		ft_putunsigned_fd(fd, nb / 10);
-	c = '0' + nb % 10;
-	write(fd, &c, 1);
-}
-
 unsigned int	ft_atoi(char *s)
 {
 	unsigned int r;
@@ -53,9 +38,9 @@ unsigned int	ft_atoi(char *s)
 	return (r);
 }
 
-unsigned int	get_timestamp(t_p3 *p)
+unsigned int	get_timestamp(void)
 {
-	gettimeofday(&p->time_now, 0);
-	return ((p->time_now.tv_sec * 1000 + p->time_now.tv_usec / 1000)
-			- p->timestampstart);
+	gettimeofday(&g_philo.time_now, 0);
+	return ((g_philo.time_now.tv_sec * 1000 + g_philo.time_now.tv_usec / 1000)
+			- g_philo.timestampstart);
 }

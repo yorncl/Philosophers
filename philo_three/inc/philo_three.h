@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_three.h                                        :+:      :+:    :+:   */
+/*   philo_three.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/08/05 23:49:10 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/21 18:43:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,59 +17,58 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
-# include <fcntl.h>
-# include <sys/stat.h>
+# include <string.h>
 # include <semaphore.h>
+# include <fcntl.h>
 # include <sys/types.h>
-# include <sys/wait.h>
-# include <signal.h>
-
-# define IDIED 151
-
-typedef struct s_p3		t_p3;
 
 typedef struct	s_params
 {
 	int				id;
 	int				nbmeal;
 	unsigned int	last_eaten;
-	t_p3			*p;
 	pthread_t		monitor;
+
 }				t_params;
 
-struct			s_p3
+struct			s_p1
 {
-	int					start;
-	int					nb;
-	unsigned int		todie;
-	unsigned int		toeat;
-	unsigned int		tosleep;
-	int					musteat;
-	pid_t				*processes;
-	int					isfull;
+	int					nb_philo;
+	int					time_to_die;
+	int					time_to_eat;
+	int					time_to_sleep;
+	int					nb_musteat;
 	int					someonedied;
-	sem_t				*forks;
-	sem_t				*print_sem;
+	pid_t				*philosophers;
 	sem_t				*isdying;
+	sem_t				*print_mutex;
+	sem_t				*forks;
 	t_params			*params;
-	struct timeval		time_start;
-	unsigned long int	timestampstart;
 	struct timeval		time_now;
-};
+	unsigned long int	timestampstart;
+	char				output[4096];
+}				t_p1;
+
+typedef	enum	e_message
+{
+	DIE,
+	TAKE_FORK,
+	THINK,
+	EAT,
+	SLEEP
+}				t_message;
+
+struct s_p1		g_philo;
 
 int				ft_strlen(char *str);
-void			ft_putstr_fd(int fd, char *str, int len);
-void			ft_putunsigned_fd(int fd, unsigned long long int nb);
 unsigned int	ft_atoi(char *s);
-unsigned int	get_timestamp(t_p3 *p);
+unsigned int	get_timestamp(void);
 
-int				init_processes(t_p3 *p);
-void			wait_processes(t_p3 *p);
-void			free_params(t_p3 *p);
+void			launch_sim();
 
-void			print_msg(t_params *p, unsigned int id, char *string, int len);
+void			print_msg(unsigned int id, t_message msg);
 
 void			*a_monitor(void *arg);
 
-int				a_philo(t_params *p);
+void			*a_philo(void *arg);
 #endif

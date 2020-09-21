@@ -5,23 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/08/19 15:18:38 by user42           ###   ########.fr       */
+/*   Created: 2020/09/21 16:11:32 by user42            #+#    #+#             */
+/*   Updated: 2020/09/21 18:43:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo_three.h>
 
-static void		parse_arg(t_p3 *p, char **av)
+static int		parse_arg(char **av)
 {
-	p->nb = ft_atoi(av[1]);
-	p->todie = ft_atoi(av[2]);
-	p->toeat = ft_atoi(av[3]);
-	p->tosleep = ft_atoi(av[4]);
+	g_philo.nb_philo = ft_atoi(av[1]);
+	g_philo.time_to_die = ft_atoi(av[2]);
+	g_philo.time_to_eat = ft_atoi(av[3]);
+	g_philo.time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
-		p->musteat = ft_atoi(av[5]);
+		g_philo.nb_musteat = ft_atoi(av[5]);
 	else
-		p->musteat = -1;
+		g_philo.nb_musteat = -1;
+	if (
+		g_philo.nb_philo < 2 ||
+		g_philo.time_to_die < 0 ||
+		g_philo.time_to_eat < 0 ||
+		g_philo.time_to_sleep < 0 ||
+		(av[5] && g_philo.nb_musteat < 0))
+		return (1);
+	return (0);
 }
 
 static int		are_numbers(int ac, char **av)
@@ -41,27 +49,60 @@ static int		are_numbers(int ac, char **av)
 	return (1);
 }
 
+static int		init_global(void)
+{
+	if ((g_philo.print_mutex = sem_open("print",
+				O_CREAT, 777, 1)) == SEM_FAILED)
+		return (1);
+	sem_unlink("print");
+	if ((g_philo.isdying = sem_open("dying", O_CREAT, 777, 1)) == SEM_FAILED)
+		return (1);
+	sem_unlink("dying");
+	if ((g_philo.forks = sem_open("forks",
+				O_CREAT, 777, g_philo.nb_philo)) == SEM_FAILED)
+		return (1);
+	sem_unlink("forks");
+	g_philo.philosophers = malloc(sizeof(pid_t) * g_philo.nb_philo);
+	g_philo.params = malloc(sizeof(t_params) * g_philo.nb_philo);
+	memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
+	if (!g_philo.philosophers
+					|| !g_philo.params || !g_philo.forks)
+		return (1);
+	return (0);
+}
+
+static void		destroy_global(void)
+{
+	if (g_philo.print_mutex)
+		sem_close(g_philo.print_mutex);
+	if (g_philo.isdying)
+		sem_close(g_philo.isdying);
+	if (g_philo.forks)
+		sem_close(g_philo.forks);
+	if (g_philo.philosophers)
+		memset(g_philo.philosophers, 0, sizeof(pid_t) * g_philo.nb_philo);
+	free(g_philo.philosophers);
+	if (g_philo.params)
+		memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
+	free(g_philo.params);
+	memset(&g_philo, 0, sizeof(t_p1));
+}
+
 int				main(int ac, char **av)
 {
-	t_p3	philo;
-
+	memset(&g_philo, 0, sizeof(t_p1));
 	if (ac < 5 || ac > 6)
 	{
-		write(2, "INVALID NUMBER OF ARGUMENTS\n", 21);
-		return (-1);
+		write(2, "Invalid number of arguments.\n", 29);
+		return (1);
 	}
-	if (!are_numbers(ac, av))
+	if (!are_numbers(ac, av) || parse_arg(av))
 	{
-		write(2, "INVALID ARGUMENTS\n", 18);
-		return (-1);
+		write(2, "Aguments are invalid in some way.\n", 34);
+		return (1);
 	}
-	if ((philo.print_sem = sem_open("print", O_CREAT, 777, 1)) == SEM_FAILED)
-		return (-1);
-	sem_unlink("print");
-	parse_arg(&philo, av);
-	if (init_processes(&philo))
-		write(2, "AN ERROR HAS OCCURED\n", 21);
-	wait_processes(&philo);
-	free_params(&philo);
+	if (init_global() == 0)
+		launch_sim();
+	destroy_global();
 	return (0);
 }

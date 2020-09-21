@@ -1,97 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   processes.c                                          :+:      :+:    :+:   */
+/*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2020/08/06 00:45:17 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/21 18:49:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo_three.h>
 
-static int	init_params(t_p3 *p)
+static void		init_params(void)
 {
-	int			i;
+	int i;
 
-	if ((p->isdying = sem_open("isdying", O_CREAT, 777, 1)) == SEM_FAILED)
-		return (-1);
-	if ((p->forks = sem_open("forks", O_CREAT, 777, p->nb)) == SEM_FAILED)
-		return (-1);
-	sem_unlink("isdying");
-	sem_unlink("forks");
-	p->isfull = 0;
-	p->someonedied = 0;
 	i = -1;
-	if ((p->params = malloc(sizeof(t_params) * p->nb)) == 0)
-		return (-1);
-	while (++i < p->nb)
+	while (++i < g_philo.nb_philo)
 	{
-		(&p->params[i])->id = i;
-		(&p->params[i])->nbmeal = 0;
-		(&p->params[i])->p = p;
-		(&p->params[i])->last_eaten = 0;
+		g_philo.params[i].id = i;
 	}
-	if ((p->processes = malloc(sizeof(pid_t) * p->nb)) == 0)
-		return (-1);
-	return (0);
 }
 
-int			init_processes(t_p3 *p)
+static void		init_processes(void)
 {
 	int			i;
 
-	if (init_params(p))
+	gettimeofday(&g_philo.time_now, 0);
+	g_philo.timestampstart = get_timestamp();
+	i = -1;
+	while (++i < g_philo.nb_philo)
 	{
-		free_params(p);
-		return (-1);
-	}
-	gettimeofday(&p->time_start, 0);
-	p->timestampstart = get_timestamp(p);
-	i = 0;
-	while (i < p->nb)
-	{
-		p->processes[i] = fork();
-		if (p->processes[i] == 0)
+		if ((g_philo.philosophers[i] = fork()) == 0)
+			a_philo(g_philo.params);
+		else if(g_philo.philosophers == -1)
 		{
-			exit(a_philo(&p->params[i]));
+			/* code */
 		}
-		else if (p->processes[i] == -1)
-		{
-			// panic
-		}
-		i++;
-		usleep(5000);
 	}
-	return (0);
 }
 
-void	wait_processes(t_p3 *p)
+static void		kill_processes(void)
 {
 	int i;
 	int status;
 
 	i = -1;
-	while (++i < p->nb)
+	while (++i < g_philo.nb_philo)
 	{
-		waitpid(-1, &status, 0);
-		if (WEXITSTATUS(status) == IDIED)
-		{
-			i = -1;
-			while (++i < p->nb)
-				kill(p->processes[i], SIGINT);
-			break ;
-		}
+		waitpid(g_philo.philosophers[i], );
 	}
 }
 
-void		free_params(t_p3 *p)
+void			launch_sim(void)
 {
-	sem_close(p->forks);
-	sem_close(p->isdying);
-	sem_close(p->print_sem);
-	free(p->processes);
-	free(p->params);
+	init_params();
+	init_processes();
+	kill_processes();
 }
