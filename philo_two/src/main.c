@@ -5,22 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/09/21 16:09:32 by user42           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include <philo_two.h>
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/09/17 00:58:24 by user42           ###   ########.fr       */
+/*   Created: 2020/09/21 16:11:32 by user42            #+#    #+#             */
+/*   Updated: 2020/09/21 16:12:15 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +23,7 @@ static int		parse_arg(char **av)
 	else
 		g_philo.nb_musteat = -1;
 	if (
-		g_philo.nb_philo < 2 || // check it out
+		g_philo.nb_philo < 2 ||
 		g_philo.time_to_die < 0 ||
 		g_philo.time_to_eat < 0 ||
 		g_philo.time_to_sleep < 0 ||
@@ -65,13 +51,15 @@ static int		are_numbers(int ac, char **av)
 
 static int		init_global(void)
 {
-	if ((g_philo.print_mutex = sem_open("print", O_CREAT, 777, 1)) == SEM_FAILED)
+	if ((g_philo.print_mutex = sem_open("print",
+				O_CREAT, 777, 1)) == SEM_FAILED)
 		return (1);
 	sem_unlink("print");
 	if ((g_philo.isdying = sem_open("dying", O_CREAT, 777, 1)) == SEM_FAILED)
 		return (1);
 	sem_unlink("dying");
-	if ((g_philo.forks = sem_open("forks", O_CREAT, 777, g_philo.nb_philo)) == SEM_FAILED)
+	if ((g_philo.forks = sem_open("forks",
+				O_CREAT, 777, g_philo.nb_philo)) == SEM_FAILED)
 		return (1);
 	sem_unlink("forks");
 	g_philo.monitors = malloc(sizeof(pthread_t) * g_philo.nb_philo);
@@ -86,7 +74,7 @@ static int		init_global(void)
 
 static void		destroy_global(void)
 {
-	if(g_philo.print_mutex)
+	if (g_philo.print_mutex)
 		sem_close(g_philo.print_mutex);
 	if (g_philo.isdying)
 		sem_close(g_philo.isdying);
