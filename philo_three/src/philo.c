@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/09/21 18:24:41 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/21 20:00:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ static void		put_forks(void)
 	sem_post(g_philo.forks);
 }
 
-void			*a_philo(void *arg)
+#include <stdio.h>
+void			a_philo(void *arg)
 {
 	t_params *p;
 
 	p = (t_params*)arg;
+	pthread_create(&p->monitor, NULL, &a_monitor, arg);
+	pthread_detach(p->monitor);
 	while (!g_philo.someonedied)
 	{
 		get_forks(p);
@@ -45,5 +48,6 @@ void			*a_philo(void *arg)
 		usleep(g_philo.time_to_sleep * 1000);
 		print_msg(p->id, THINK);
 	}
-	return (0);
+		printf("philo nb %d is dying %d\n", p->id, g_philo.someonedied);
+	exit(g_philo.someonedied ? EXIT_DIED : 0);
 }

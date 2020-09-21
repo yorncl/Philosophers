@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2020/09/21 18:49:04 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/21 19:10:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ static void		init_processes(void)
 	while (++i < g_philo.nb_philo)
 	{
 		if ((g_philo.philosophers[i] = fork()) == 0)
-			a_philo(g_philo.params);
-		else if(g_philo.philosophers == -1)
+			a_philo(&g_philo.params[i]);
+		else if(g_philo.philosophers[i] == -1)
 		{
 			/* code */
 		}
+		usleep(5000);
 	}
 }
 
@@ -49,8 +50,16 @@ static void		kill_processes(void)
 	i = -1;
 	while (++i < g_philo.nb_philo)
 	{
-		waitpid(g_philo.philosophers[i], );
+		waitpid(-1, &status, 0);
+		if (WEXITSTATUS(status) == EXIT_DIED)
+		{
+			i = -1;
+			while (++i < g_philo.nb_philo)
+				kill(g_philo.philosophers[i], SIGINT);
+			break ;
+		}
 	}
+
 }
 
 void			launch_sim(void)

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/09/21 18:43:12 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/21 19:02:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <semaphore.h>
 # include <fcntl.h>
 # include <sys/types.h>
+# include <sys/wait.h>
+
+# define EXIT_DIED 666
 
 typedef struct	s_params
 {
@@ -70,5 +73,5 @@ void			print_msg(unsigned int id, t_message msg);
 
 void			*a_monitor(void *arg);
 
-void			*a_philo(void *arg);
+void			a_philo(void *arg);
 #endif
