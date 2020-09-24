@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2020/09/22 13:32:24 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/24 18:15:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,6 @@ static void		init_params(void)
 	}
 }
 
-static void		init_processes(void)
-{
-	int			i;
-
-	gettimeofday(&g_philo.time_now, 0);
-	g_philo.timestampstart = get_timestamp();
-	i = -1;
-	while (++i < g_philo.nb_philo)
-	{
-		if ((g_philo.philosophers[i] = fork()) == 0)
-			a_philo(&g_philo.params[i]);
-		else if(g_philo.philosophers[i] == -1)
-		{
-			/* code */
-		}
-		usleep(5000);
-	}
-}
-
 static void		kill_processes(void)
 {
 	int i;
@@ -55,16 +36,41 @@ static void		kill_processes(void)
 		{
 			i = -1;
 			while (++i < g_philo.nb_philo)
-				kill(g_philo.philosophers[i], SIGINT);
+				if (g_philo.philosophers[i])
+					kill(g_philo.philosophers[i], SIGINT);
 			break ;
 		}
 	}
+}
 
+static int		init_processes(void)
+{
+	int			i;
+
+	gettimeofday(&g_philo.time_now, 0);
+	g_philo.timestampstart = get_timestamp();
+	i = -1;
+	while (++i < g_philo.nb_philo)
+	{
+		if ((g_philo.philosophers[i] = fork()) == 0)
+			a_philo(&g_philo.params[i]);
+		else if (g_philo.philosophers[i] == -1)
+		{
+			kill_processes();
+			return (1);
+		}
+		usleep(5000);
+	}
+	return (0);
 }
 
 void			launch_sim(void)
 {
 	init_params();
-	init_processes();
+	if (init_processes())
+	{
+		write(2, "Error creating the processes\n", 29);
+		return ;
+	}
 	kill_processes();
 }

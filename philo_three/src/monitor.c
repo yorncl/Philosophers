@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:30:43 by user42            #+#    #+#             */
-/*   Updated: 2020/09/22 12:04:50 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/24 16:30:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	*a_monitor(void *arg)
 {
 	t_params *p;
-
 
 	p = (t_params*)arg;
 	while (!g_philo.someonedied && p->nbmeal != g_philo.nb_musteat)
