@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:30:43 by user42            #+#    #+#             */
-/*   Updated: 2020/09/21 19:58:57 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/22 12:04:50 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	*a_monitor(void *arg)
 		{
 			sem_wait(g_philo.isdying);
 			print_msg(p->id, DIE);
+			exit(EXIT_DIED);
 			break ;
 		}
 		usleep(2000);

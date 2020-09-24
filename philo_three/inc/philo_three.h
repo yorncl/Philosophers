@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/09/21 19:02:43 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/22 12:09:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-# define EXIT_DIED 666
+# define EXIT_DIED 69
 
 typedef struct	s_params
 {

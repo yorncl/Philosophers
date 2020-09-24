@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:31:35 by user42            #+#    #+#             */
-/*   Updated: 2020/09/21 19:56:10 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/22 11:57:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ void			print_msg(unsigned int id, t_message msg)
 	offset++;
 	copy_msg(offset, msg);
 	write(1, g_philo.output, ft_strlen(g_philo.output));
-	sem_post(g_philo.print_mutex);
+	if (msg != DIE)
+		sem_post(g_philo.print_mutex);
 }

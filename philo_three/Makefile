@@ -25,7 +25,7 @@ objs/%.o: src/%.c
 all : $(NAME)
 
 
-$(NAME) : $(OBJS) $(HEADER) 
+$(NAME) : $(OBJS) 
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS)  -o $(NAME)
 
 clean:

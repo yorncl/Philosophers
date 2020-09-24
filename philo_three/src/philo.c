@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/09/21 20:00:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/22 11:53:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void		put_forks(void)
 	sem_post(g_philo.forks);
 }
 
-#include <stdio.h>
 void			a_philo(void *arg)
 {
 	t_params *p;
@@ -48,6 +47,5 @@ void			a_philo(void *arg)
 		usleep(g_philo.time_to_sleep * 1000);
 		print_msg(p->id, THINK);
 	}
-		printf("philo nb %d is dying %d\n", p->id, g_philo.someonedied);
 	exit(g_philo.someonedied ? EXIT_DIED : 0);
 }
