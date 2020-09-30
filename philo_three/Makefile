@@ -9,7 +9,7 @@ SRCS =	src/utils.c \
 		src/processes.c \
 		src/main.c \
 
-HEADERS = philo_three.h
+HEADERS = inc/philo_three.h
 
 OBJDIR = objs
 OBJS = $(patsubst src/%.c, objs/%.o, $(SRCS))
@@ -18,7 +18,7 @@ NAME = philo_three
 
 INCLUDES = -I inc -pthread
 
-objs/%.o: src/%.c
+objs/%.o: src/%.c $(HEADERS)
 	$(MKDIR) $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 

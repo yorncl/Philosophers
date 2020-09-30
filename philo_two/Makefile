@@ -9,7 +9,7 @@ SRCS =	src/utils.c \
 		src/threads.c \
 		src/main.c \
 
-HEADERS = philo_two.h
+HEADERS = inc/philo_two.h
 
 OBJDIR = objs
 OBJS = $(patsubst src/%.c, objs/%.o, $(SRCS))
@@ -18,14 +18,14 @@ NAME = philo_two
 
 INCLUDES = -I inc -pthread
 
-objs/%.o: src/%.c
+objs/%.o: src/%.c $(HEADERS)
 	$(MKDIR) $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
 
 all : $(NAME)
 
 
-$(NAME) : $(OBJS) $(HEADER) 
+$(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS)  -o $(NAME)
 
 clean:
