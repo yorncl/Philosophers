@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/09/24 16:41:46 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/01 14:35:21 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		parse_arg(char **av)
 		g_philo.time_to_die < 0 ||
 		g_philo.time_to_eat < 0 ||
 		g_philo.time_to_sleep < 0 ||
-		(av[5] && g_philo.nb_musteat < 0))
+		(av[5] && g_philo.nb_musteat <= 0))
 		return (1);
 	return (0);
 }
