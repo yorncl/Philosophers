@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2020/09/24 18:15:27 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/07 22:34:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static int		init_processes(void)
 			kill_processes();
 			return (1);
 		}
-		usleep(5000);
+		if (i == g_philo.nb_philo / 2)
+			usleep(5000 * g_philo.nb_philo);
 	}
 	return (0);
 }
