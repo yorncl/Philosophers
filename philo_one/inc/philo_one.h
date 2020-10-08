@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/09/17 15:29:41 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/09 00:59:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ struct			s_p1
 	pthread_mutex_t		isdying;
 	pthread_mutex_t		print_mutex;
 	pthread_mutex_t		*forks;
+	pthread_mutex_t		*protection;
 	t_params			*params;
 	struct timeval		time_now;
 	unsigned long int	timestampstart;

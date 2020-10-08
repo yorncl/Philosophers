@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:59 by user42            #+#    #+#             */
-/*   Updated: 2020/10/01 14:35:21 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/09 01:03:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,18 @@ static int		init_global(void)
 	g_philo.params = malloc(sizeof(t_params) * g_philo.nb_philo);
 	memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
 	g_philo.forks = malloc(sizeof(pthread_mutex_t) * g_philo.nb_philo);
-	if (!g_philo.monitors || !g_philo.philosophers
-					|| !g_philo.params || !g_philo.forks)
+	g_philo.protection = malloc(sizeof(pthread_mutex_t) * g_philo.nb_philo);
+	if (!g_philo.monitors || !g_philo.philosophers ||
+			!g_philo.params || !g_philo.forks || !g_philo.protection)
 		return (1);
 	i = -1;
 	while (++i < g_philo.nb_philo)
+	{
 		if (pthread_mutex_init(&g_philo.forks[i], 0))
 			return (1);
+		if (pthread_mutex_init(&g_philo.protection[i], 0))
+			return (1);
+	}
 	return (0);
 }
 
@@ -93,6 +98,9 @@ static void		destroy_global(void)
 	if (g_philo.forks)
 		memset(g_philo.forks, 0, sizeof(pthread_mutex_t*) * g_philo.nb_philo);
 	free(g_philo.forks);
+	if (g_philo.protection)
+		memset(g_philo.protection, 0, sizeof(pthread_mutex_t*) * g_philo.nb_philo);
+	free(g_philo.protection);
 	memset(&g_philo, 0, sizeof(t_p1));
 }
 
