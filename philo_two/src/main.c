@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 16:11:32 by user42            #+#    #+#             */
-/*   Updated: 2020/10/01 14:35:41 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/09 01:37:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,23 @@ static int		are_numbers(int ac, char **av)
 
 static int		init_global(void)
 {
-	if ((g_philo.print_mutex = sem_open("print",
-				O_CREAT, 777, 1)) == SEM_FAILED)
+	int i;
+
+	if ((g_philo.print_mutex = sem_open("print",O_CREAT, 777, 1)) == SEM_FAILED
+		|| sem_unlink("print")
+		|| (g_philo.isdying = sem_open("dying", O_CREAT, 777, 1)) == SEM_FAILED
+		|| sem_unlink("dying")
+		|| (g_philo.forks = sem_open("forks", O_CREAT,
+						777, g_philo.nb_philo)) == SEM_FAILED
+		|| sem_unlink("forks"))
 		return (1);
-	sem_unlink("print");
-	if ((g_philo.isdying = sem_open("dying", O_CREAT, 777, 1)) == SEM_FAILED)
+	if ((g_philo.protection = malloc(sizeof(sem_t*) * g_philo.nb_philo)) == 0)
 		return (1);
-	sem_unlink("dying");
-	if ((g_philo.forks = sem_open("forks",
-				O_CREAT, 777, g_philo.nb_philo)) == SEM_FAILED)
+	i = -1;
+	while (++i < g_philo.nb_philo)
+		if ((g_philo.protection[i] = sem_open("protecc",
+				O_CREAT, 777, 1)) == SEM_FAILED || sem_unlink("protecc"))
 		return (1);
-	sem_unlink("forks");
 	g_philo.monitors = malloc(sizeof(pthread_t) * g_philo.nb_philo);
 	g_philo.philosophers = malloc(sizeof(pthread_t) * g_philo.nb_philo);
 	g_philo.params = malloc(sizeof(t_params) * g_philo.nb_philo);

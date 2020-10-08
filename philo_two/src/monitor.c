@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:30:43 by user42            #+#    #+#             */
-/*   Updated: 2020/09/17 16:07:47 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/09 01:34:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@ void	*a_monitor(void *arg)
 	{
 		if (get_timestamp() > g_philo.time_to_die + p->last_eaten)
 		{
-			sem_wait(g_philo.isdying);
-			print_msg(p->id, DIE);
-			sem_post(g_philo.isdying);
+			sem_wait(g_philo.protection[p->id]);
+			if (get_timestamp() > g_philo.time_to_die + p->last_eaten)
+			{
+				sem_wait(g_philo.isdying);
+				print_msg(p->id, DIE);
+				sem_post(g_philo.isdying);
+			}
+			sem_post(g_philo.protection[p->id]);
 			break ;
 		}
 		usleep(2000);
