@@ -80,6 +80,8 @@ static int		init_global(void)
 
 static void		destroy_global(void)
 {
+	int i;
+
 	if (g_philo.print_mutex)
 		sem_close(g_philo.print_mutex);
 	if (g_philo.isdying)
@@ -87,14 +89,19 @@ static void		destroy_global(void)
 	if (g_philo.forks)
 		sem_close(g_philo.forks);
 	if (g_philo.monitors)
-		memset(g_philo.monitors, 0, sizeof(pthread_t) * g_philo.nb_philo);
-	free(g_philo.monitors);
+		free(g_philo.monitors);
 	if (g_philo.philosophers)
-		memset(g_philo.philosophers, 0, sizeof(pthread_t) * g_philo.nb_philo);
-	free(g_philo.philosophers);
+		free(g_philo.philosophers);
+	i = -1;
+	if (g_philo.protection)
+	{
+		while (++i < g_philo.nb_philo)
+			if (g_philo.protection[i])
+				sem_close(g_philo.protection[i]);
+		free(g_philo.protection);
+	}
 	if (g_philo.params)
-		memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
-	free(g_philo.params);
+		free(g_philo.params);
 	memset(&g_philo, 0, sizeof(t_p1));
 }
 
