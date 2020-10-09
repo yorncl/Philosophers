@@ -53,8 +53,8 @@ static int		init_global(void)
 {
 	int i;
 
-	if ((g_philo.print_mutex = sem_open("print",O_CREAT, 777, 1)) == SEM_FAILED
-		|| sem_unlink("print")
+	if ((g_philo.print_mutex = sem_open("prnt", O_CREAT, 777, 1)) == SEM_FAILED
+		|| sem_unlink("prnt")
 		|| (g_philo.isdying = sem_open("dying", O_CREAT, 777, 1)) == SEM_FAILED
 		|| sem_unlink("dying")
 		|| (g_philo.forks = sem_open("forks", O_CREAT,
@@ -67,7 +67,7 @@ static int		init_global(void)
 	while (++i < g_philo.nb_philo)
 		if ((g_philo.protection[i] = sem_open("protecc",
 				O_CREAT, 777, 1)) == SEM_FAILED || sem_unlink("protecc"))
-		return (1);
+			return (1);
 	g_philo.monitors = malloc(sizeof(pthread_t) * g_philo.nb_philo);
 	g_philo.philosophers = malloc(sizeof(pthread_t) * g_philo.nb_philo);
 	g_philo.params = malloc(sizeof(t_params) * g_philo.nb_philo);

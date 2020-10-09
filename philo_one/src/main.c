@@ -99,7 +99,8 @@ static void		destroy_global(void)
 		memset(g_philo.forks, 0, sizeof(pthread_mutex_t*) * g_philo.nb_philo);
 	free(g_philo.forks);
 	if (g_philo.protection)
-		memset(g_philo.protection, 0, sizeof(pthread_mutex_t*) * g_philo.nb_philo);
+		memset(g_philo.protection, 0,
+			sizeof(pthread_mutex_t*) * g_philo.nb_philo);
 	free(g_philo.protection);
 	memset(&g_philo, 0, sizeof(t_p1));
 }

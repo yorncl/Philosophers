@@ -67,7 +67,7 @@ static int		init_global(void)
 	while (++i < g_philo.nb_philo)
 		if ((g_philo.protection[i] = sem_open("protecc",
 				O_CREAT, 777, 1)) == SEM_FAILED || sem_unlink("protecc"))
-		return (1);
+			return (1);
 	g_philo.philosophers = malloc(sizeof(pid_t) * g_philo.nb_philo);
 	g_philo.params = malloc(sizeof(t_params) * g_philo.nb_philo);
 	memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
