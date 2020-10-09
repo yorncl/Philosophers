@@ -96,8 +96,7 @@ static void		destroy_global(void)
 				pthread_mutex_destroy(&g_philo.forks[i]);
 		free(g_philo.forks);
 	}
-	i = -1;
-	if (g_philo.protection)
+	if (g_philo.protection && (i = -1))
 	{
 		while (++i < g_philo.nb_philo)
 			if (&g_philo.protection[i])
