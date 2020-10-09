@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/09/22 12:09:51 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/09 01:50:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ struct			s_p1
 	sem_t				*isdying;
 	sem_t				*print_mutex;
 	sem_t				*forks;
+	sem_t				**protection;
 	t_params			*params;
 	struct timeval		time_now;
 	unsigned long int	timestampstart;

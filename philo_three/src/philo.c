@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/09/22 11:53:45 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/09 01:58:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void		get_forks(t_params *p)
 {
+	sem_wait(g_philo.protection[p->id]);
 	sem_wait(g_philo.forks);
 	print_msg(p->id, TAKE_FORK);
 	sem_wait(g_philo.forks);
@@ -22,10 +23,11 @@ static void		get_forks(t_params *p)
 	p->nbmeal++;
 }
 
-static void		put_forks(void)
+static void		put_forks(t_params *p)
 {
 	sem_post(g_philo.forks);
 	sem_post(g_philo.forks);
+	sem_post(g_philo.protection[p->id]);
 }
 
 void			a_philo(void *arg)
@@ -40,7 +42,7 @@ void			a_philo(void *arg)
 		get_forks(p);
 		print_msg(p->id, EAT);
 		usleep(g_philo.time_to_eat * 1000);
-		put_forks();
+		put_forks(p);
 		if (p->nbmeal == g_philo.nb_musteat && g_philo.nb_musteat != -1)
 			break ;
 		print_msg(p->id, SLEEP);

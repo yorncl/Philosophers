@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 16:11:32 by user42            #+#    #+#             */
-/*   Updated: 2020/10/01 14:35:30 by user42           ###   ########.fr       */
+/*   Updated: 2020/10/09 01:59:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,23 @@ static int		are_numbers(int ac, char **av)
 
 static int		init_global(void)
 {
-	if ((g_philo.print_mutex = sem_open("print",
-				O_CREAT, 777, 1)) == SEM_FAILED)
+	int i;
+
+	if ((g_philo.print_mutex = sem_open("prnt", O_CREAT, 777, 1)) == SEM_FAILED
+	|| sem_unlink("prnt")
+	|| (g_philo.isdying = sem_open("dying", O_CREAT, 777, 1)) == SEM_FAILED
+	|| sem_unlink("dying")
+	|| (g_philo.forks = sem_open("forks",
+				O_CREAT, 777, g_philo.nb_philo)) == SEM_FAILED
+	|| sem_unlink("forks")
+	|| (g_philo.protection = malloc(sizeof(sem_t*) * g_philo.nb_philo)) == 0)
 		return (1);
-	sem_unlink("print");
-	if ((g_philo.isdying = sem_open("dying", O_CREAT, 777, 1)) == SEM_FAILED)
+	memset(g_philo.protection, 0, sizeof(sem_t*) * g_philo.nb_philo);
+	i = -1;
+	while (++i < g_philo.nb_philo)
+		if ((g_philo.protection[i] = sem_open("protecc",
+				O_CREAT, 777, 1)) == SEM_FAILED || sem_unlink("protecc"))
 		return (1);
-	sem_unlink("dying");
-	if ((g_philo.forks = sem_open("forks",
-				O_CREAT, 777, g_philo.nb_philo)) == SEM_FAILED)
-		return (1);
-	sem_unlink("forks");
 	g_philo.philosophers = malloc(sizeof(pid_t) * g_philo.nb_philo);
 	g_philo.params = malloc(sizeof(t_params) * g_philo.nb_philo);
 	memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
@@ -73,6 +79,8 @@ static int		init_global(void)
 
 static void		destroy_global(void)
 {
+	int i;
+
 	if (g_philo.print_mutex)
 		sem_close(g_philo.print_mutex);
 	if (g_philo.isdying)
@@ -84,6 +92,13 @@ static void		destroy_global(void)
 	free(g_philo.philosophers);
 	if (g_philo.params)
 		memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
+	if (g_philo.protection)
+	{
+		while (++i < g_philo.nb_philo)
+			if (g_philo.protection[i])
+				sem_close(g_philo.protection[i]);
+		free(g_philo.protection);
+	}
 	free(g_philo.params);
 	memset(&g_philo, 0, sizeof(t_p1));
 }
