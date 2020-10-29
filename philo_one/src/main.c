@@ -84,25 +84,23 @@ static void		destroy_global(void)
 	pthread_mutex_destroy(&g_philo.print_mutex);
 	pthread_mutex_destroy(&g_philo.isdying);
 	if (g_philo.monitors)
-		free(g_philo.monitors);
+		memset(g_philo.monitors, 0, sizeof(pthread_t) * g_philo.nb_philo);
+	free(g_philo.monitors);
 	if (g_philo.philosophers)
-		free(g_philo.philosophers);
+		memset(g_philo.philosophers, 0, sizeof(pthread_t) * g_philo.nb_philo);
+	free(g_philo.philosophers);
 	if (g_philo.params)
-		free(g_philo.params);
-	if (g_philo.forks && (i = -1))
-	{
-		while (++i < g_philo.nb_philo)
-			if (&g_philo.forks[i])
-				pthread_mutex_destroy(&g_philo.forks[i]);
-		free(g_philo.forks);
-	}
-	if (g_philo.protection && (i = -1))
-	{
-		while (++i < g_philo.nb_philo)
-			if (&g_philo.protection[i])
-				pthread_mutex_destroy(&g_philo.protection[i]);
-		free(g_philo.protection);
-	}
+		memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
+	free(g_philo.params);
+	i = -1;
+	while (++i < g_philo.nb_philo)
+		pthread_mutex_destroy(&g_philo.forks[i]);
+	if (g_philo.forks)
+		memset(g_philo.forks, 0, sizeof(pthread_mutex_t*) * g_philo.nb_philo);
+	free(g_philo.forks);
+	if (g_philo.protection)
+		memset(g_philo.protection, 0, sizeof(pthread_mutex_t*) * g_philo.nb_philo);
+	free(g_philo.protection);
 	memset(&g_philo, 0, sizeof(t_p1));
 }
 

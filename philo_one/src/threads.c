@@ -29,26 +29,24 @@ static void		init_threads(void)
 
 	gettimeofday(&g_philo.time_now, 0);
 	g_philo.timestampstart = get_timestamp();
-	i = -1;
-	while (++i < g_philo.nb_philo)
-	{
-		pthread_create(&g_philo.philosophers[i], NULL,
-						&a_philo, (void*)&g_philo.params[i]);
-		i++;
-	}
-	usleep(7500);
 	i = 0;
-	while (++i < g_philo.nb_philo)
+	while (i < g_philo.nb_philo)
 	{
 		pthread_create(&g_philo.philosophers[i], NULL,
 						&a_philo, (void*)&g_philo.params[i]);
-		i++;
-	}
-	i = -1;
-	while (++i < g_philo.nb_philo)
-	{
 		pthread_create(&g_philo.monitors[i], NULL,
-				&a_monitor, (void*)&g_philo.params[i]);
+						&a_monitor, (void*)&g_philo.params[i]);
+		i += 2;
+	}
+	usleep(g_philo.nb_philo * 5000);
+	i = 1;
+	while (i < g_philo.nb_philo)
+	{
+		pthread_create(&g_philo.philosophers[i], NULL,
+						&a_philo, (void*)&g_philo.params[i]);
+		pthread_create(&g_philo.monitors[i], NULL,
+						&a_monitor, (void*)&g_philo.params[i]);
+		i += 2;
 	}
 }
 
