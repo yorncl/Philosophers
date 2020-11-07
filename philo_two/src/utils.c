@@ -38,6 +38,17 @@ unsigned int	ft_atoi(char *s)
 	return (r);
 }
 
+void			ft_sleep(unsigned int milis)
+{
+	unsigned int start;
+
+	start = get_timestamp();
+	while (get_timestamp() < start + milis)
+	{
+		usleep(500);
+	}
+}
+
 unsigned int	get_timestamp(void)
 {
 	gettimeofday(&g_philo.time_now, 0);

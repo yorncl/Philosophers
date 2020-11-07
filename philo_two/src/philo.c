@@ -39,12 +39,12 @@ void			*a_philo(void *arg)
 	{
 		get_forks(p);
 		print_msg(p->id, EAT);
-		usleep(g_philo.time_to_eat * 1000);
+		ft_sleep(g_philo.time_to_eat);
 		put_forks(p);
 		if (p->nbmeal == g_philo.nb_musteat && g_philo.nb_musteat != -1)
 			break ;
 		print_msg(p->id, SLEEP);
-		usleep(g_philo.time_to_sleep * 1000);
+		ft_sleep(g_philo.time_to_sleep);
 		print_msg(p->id, THINK);
 	}
 	return (0);

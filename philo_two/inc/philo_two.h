@@ -61,6 +61,7 @@ struct s_p1		g_philo;
 
 int				ft_strlen(char *str);
 unsigned int	ft_atoi(char *s);
+void			ft_sleep(unsigned int milis);
 unsigned int	get_timestamp(void);
 
 void			launch_sim();
