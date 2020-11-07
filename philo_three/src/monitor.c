@@ -31,7 +31,7 @@ void	*a_monitor(void *arg)
 			sem_post(g_philo.protection[p->id]);
 			break ;
 		}
-		usleep(2000);
+		usleep(8000);
 	}
 	return (0);
 }

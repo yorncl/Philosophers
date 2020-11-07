@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <signal.h>
 
 # define EXIT_DIED 69
 
@@ -67,6 +68,7 @@ struct s_p1		g_philo;
 int				ft_strlen(char *str);
 unsigned int	ft_atoi(char *s);
 unsigned int	get_timestamp(void);
+void			ft_sleep(unsigned int milis);
 
 void			launch_sim();
 
