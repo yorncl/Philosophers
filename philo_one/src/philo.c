@@ -20,9 +20,9 @@ static void		get_forks(t_params *p)
 		pthread_mutex_lock(&g_philo.forks[0]);
 	else
 		pthread_mutex_lock(&g_philo.forks[p->id + 1]);
-	pthread_mutex_lock(&g_philo.protection[p->id]);
-	p->last_eaten = get_timestamp();
 	print_msg(p->id, TAKE_FORK);
+	pthread_mutex_lock(&g_philo.protection[p->id]);
+	p->last_eaten = get_timestamp(); // should it be a start or end of meal ?
 	p->nbmeal++;
 }
 
@@ -41,16 +41,17 @@ void			*a_philo(void *arg)
 	t_params *p;
 
 	p = (t_params*)arg;
+
 	while (!g_philo.someonedied)
 	{
 		get_forks(p);
 		print_msg(p->id, EAT);
-		usleep(g_philo.time_to_eat * 1000);
+		ft_sleep(g_philo.time_to_eat);
 		put_forks(p);
 		if (p->nbmeal == g_philo.nb_musteat && g_philo.nb_musteat != -1)
 			break ;
 		print_msg(p->id, SLEEP);
-		usleep(g_philo.time_to_sleep * 1000);
+		ft_sleep(g_philo.time_to_sleep);
 		print_msg(p->id, THINK);
 	}
 	return (0);

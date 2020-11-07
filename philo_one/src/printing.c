@@ -12,11 +12,11 @@
 
 #include <philo_one.h>
 
-static int		unsigned_copy(char *dest, unsigned long long int nb)
+static int		unsigned_copy(char *dest, unsigned int nb)
 {
 	int						i;
-	unsigned long long int	size;
-	unsigned long long int	tmp;
+	unsigned int	size;
+	unsigned int	tmp;
 
 	size = 1;
 	while (nb > (tmp = size * 10))

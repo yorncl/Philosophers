@@ -27,7 +27,6 @@ static void		init_threads(void)
 {
 	int			i;
 
-	gettimeofday(&g_philo.time_now, 0);
 	g_philo.timestampstart = get_timestamp();
 	i = 0;
 	while (i < g_philo.nb_philo)
@@ -38,7 +37,7 @@ static void		init_threads(void)
 						&a_monitor, (void*)&g_philo.params[i]);
 		i += 2;
 	}
-	usleep(g_philo.nb_philo * 5000);
+	usleep(5000);
 	i = 1;
 	while (i < g_philo.nb_philo)
 	{
