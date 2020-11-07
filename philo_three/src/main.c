@@ -81,6 +81,7 @@ static void		destroy_global(void)
 {
 	int i;
 
+	i = 0;
 	if (g_philo.print_mutex)
 		sem_close(g_philo.print_mutex);
 	if (g_philo.isdying)
