@@ -81,7 +81,6 @@ static void		destroy_global(void)
 {
 	int i;
 
-	i = 0;
 	if (g_philo.print_mutex)
 		sem_close(g_philo.print_mutex);
 	if (g_philo.isdying)
@@ -95,6 +94,7 @@ static void		destroy_global(void)
 		memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
 	if (g_philo.protection)
 	{
+		i = -1;
 		while (++i < g_philo.nb_philo)
 			if (g_philo.protection[i])
 				sem_close(g_philo.protection[i]);

@@ -41,7 +41,6 @@ void			*a_philo(void *arg)
 	t_params *p;
 
 	p = (t_params*)arg;
-
 	while (!g_philo.someonedied)
 	{
 		get_forks(p);

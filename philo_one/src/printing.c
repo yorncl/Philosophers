@@ -12,9 +12,10 @@
 
 #include <philo_one.h>
 
-static int		unsigned_copy(char *dest, unsigned int nb)
+static int		unsigned_copy(char *dest,
+							unsigned int nb)
 {
-	int						i;
+	int				i;
 	unsigned int	size;
 	unsigned int	tmp;
 

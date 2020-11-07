@@ -60,7 +60,7 @@ static int		init_processes(void)
 			return (1);
 		}
 		if (i == g_philo.nb_philo / 2)
-			usleep(9000);
+			usleep(5000);
 	}
 	return (0);
 }
