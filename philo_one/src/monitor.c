@@ -21,8 +21,8 @@ void	*a_monitor(void *arg)
 	p = (t_params*)arg;
 	while (!g_philo.someonedied && p->nbmeal != g_philo.nb_musteat)
 	{
-		// if (get_timestamp() > g_philo.time_to_die + p->last_eaten)
-		// {
+		if (get_timestamp() > g_philo.time_to_die + p->last_eaten)
+		{
 			pthread_mutex_lock(&g_philo.protection[p->id]);
 			if (get_timestamp() > g_philo.time_to_die + p->last_eaten)
 			{
@@ -31,8 +31,8 @@ void	*a_monitor(void *arg)
 				pthread_mutex_unlock(&g_philo.isdying);
 			}
 			pthread_mutex_unlock(&g_philo.protection[p->id]);
-			// break ;
-		// }
+			break ;
+		}
 		usleep(8000);
 	}
 	return (0);
