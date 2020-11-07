@@ -45,9 +45,8 @@ void			ft_sleep(unsigned int milis)
 	start = get_timestamp();
 	while (get_timestamp() < start + milis)
 	{
-		usleep(500); // make a quick benchmark
+		usleep(500);
 	}
-	
 }
 
 unsigned int	get_timestamp(void)

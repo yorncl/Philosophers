@@ -22,7 +22,7 @@ static void		get_forks(t_params *p)
 		pthread_mutex_lock(&g_philo.forks[p->id + 1]);
 	print_msg(p->id, TAKE_FORK);
 	pthread_mutex_lock(&g_philo.protection[p->id]);
-	p->last_eaten = get_timestamp(); // should it be a start or end of meal ?
+	p->last_eaten = get_timestamp();
 	p->nbmeal++;
 }
 
