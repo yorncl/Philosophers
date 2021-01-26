@@ -21,18 +21,16 @@ void	*a_monitor(void *arg)
 	p = (t_params*)arg;
 	while (!g_philo.someonedied && p->nbmeal != g_philo.nb_musteat)
 	{
+		pthread_mutex_lock(&g_philo.protection[p->id]);
 		if (get_timestamp() > g_philo.time_to_die + p->last_eaten)
 		{
-			pthread_mutex_lock(&g_philo.protection[p->id]);
-			if (get_timestamp() > g_philo.time_to_die + p->last_eaten)
-			{
-				pthread_mutex_lock(&g_philo.isdying);
-				print_msg(p->id, DIE);
-				pthread_mutex_unlock(&g_philo.isdying);
-			}
+			pthread_mutex_lock(&g_philo.isdying);
+			print_msg(p->id, DIE);
 			pthread_mutex_unlock(&g_philo.protection[p->id]);
 			break ;
+			pthread_mutex_unlock(&g_philo.isdying);
 		}
+		pthread_mutex_unlock(&g_philo.protection[p->id]);
 		usleep(8000);
 	}
 	return (0);
