@@ -12,30 +12,35 @@
 
 #include <philo_two.h>
 
-static int		unsigned_copy(char *dest, unsigned long long int nb)
+unsigned int	ft_uintlen(unsigned long long int n)
 {
-	int						i;
-	unsigned long long int	size;
-	unsigned long long int	tmp;
+	int size;
 
-	size = 1;
-	while (nb > (tmp = size * 10))
-		size = tmp;
-	i = 0;
-	while (size > 0)
+	if (n == 0)
+		return (1);
+	size = 0;
+	while (n != 0)
 	{
-		dest[i] = '0' + (nb / size % 10);
-		size /= 10;
-		i++;
+		n /= 10;
+		size++;
 	}
-	return (i);
+	return (size);
 }
 
-static void		ft_strcpy(char *dest, char *src)
+unsigned int	unsigned_copy(char *dest, unsigned long long int nb)
 {
-	while (*src)
-		*dest++ = *src++;
-	*dest = 0;
+	unsigned int	size;
+	unsigned int	i;
+
+	size = ft_uintlen(nb);
+	i = size;
+	while (nb != 0)
+	{
+		dest[i - 1] = '0' + (nb % 10);
+		nb /= 10;
+		i--;
+	}
+	return (size);
 }
 
 static void		copy_msg(int offset, t_message msg)

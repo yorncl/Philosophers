@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror  #-g -fsanitize=address
 MKDIR = mkdir -p
 
 SRCS =	src/utils.c \
@@ -7,6 +7,7 @@ SRCS =	src/utils.c \
 		src/monitor.c \
 		src/printing.c \
 		src/threads.c \
+		src/sem.c \
 		src/main.c \
 
 HEADERS = inc/philo_two.h

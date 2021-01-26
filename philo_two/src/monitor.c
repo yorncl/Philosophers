@@ -26,7 +26,7 @@ void	*a_monitor(void *arg)
 			print_msg(p->id, DIE);
 			sem_post(g_philo.isdying);
 			sem_post(g_philo.protection[p->id]);
-			break;
+			break ;
 		}
 		sem_post(g_philo.protection[p->id]);
 		usleep(8000);

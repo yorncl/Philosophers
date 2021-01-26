@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_two.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/10/09 01:24:22 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 00:42:43 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ int				ft_strlen(char *str);
 unsigned int	ft_atoi(char *s);
 void			ft_sleep(unsigned int milis);
 unsigned int	get_timestamp(void);
+void			ft_strcpy(char *dest, char *src);
+unsigned int	ft_uintlen(unsigned long long int nb);
+unsigned int	unsigned_copy(char *dest, unsigned long long int nb);
+char			*get_name(unsigned int i);
+int				create_semaphores();
 
 void			launch_sim();
 

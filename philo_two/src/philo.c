@@ -17,9 +17,9 @@ static void		get_forks(t_params *p)
 	sem_wait(g_philo.forks);
 	print_msg(p->id, TAKE_FORK);
 	sem_wait(g_philo.forks);
+	print_msg(p->id, TAKE_FORK);
 	sem_wait(g_philo.protection[p->id]);
 	p->last_eaten = get_timestamp();
-	print_msg(p->id, TAKE_FORK);
 	p->nbmeal++;
 }
 
