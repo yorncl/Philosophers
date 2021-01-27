@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 21:11:02 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/27 21:40:16 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void		init_params(void)
 		g_philo.params[i].id = i;
 	}
 }
-
-#include <stdio.h>
 
 static void		kill_processes(void)
 {

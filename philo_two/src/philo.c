@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 21:27:52 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/27 21:38:56 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		get_forks(t_params *p)
 	sem_post(g_philo.protection[p->id]);
 }
 
-static void		put_forks()
+static void		put_forks(void)
 {
 	sem_post(g_philo.forks);
 	sem_post(g_philo.forks);
