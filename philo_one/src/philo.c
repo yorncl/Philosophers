@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/10/09 01:00:28 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 21:29:36 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void		get_forks(t_params *p)
 	pthread_mutex_lock(&g_philo.protection[p->id]);
 	p->last_eaten = get_timestamp();
 	p->nbmeal++;
+	pthread_mutex_unlock(&g_philo.protection[p->id]);
 }
 
 static void		put_forks(t_params *p)
@@ -33,7 +34,6 @@ static void		put_forks(t_params *p)
 		pthread_mutex_unlock(&g_philo.forks[0]);
 	else
 		pthread_mutex_unlock(&g_philo.forks[p->id + 1]);
-	pthread_mutex_unlock(&g_philo.protection[p->id]);
 }
 
 void			*a_philo(void *arg)

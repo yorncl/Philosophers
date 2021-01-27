@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 17:00:19 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/27 21:27:52 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			*a_philo(void *arg)
 		get_forks(p);
 		print_msg(p->id, EAT);
 		ft_sleep(g_philo.time_to_eat);
-		put_forks(p);
+		put_forks();
 		if (p->nbmeal == g_philo.nb_musteat && g_philo.nb_musteat != -1)
 			break ;
 		print_msg(p->id, SLEEP);
