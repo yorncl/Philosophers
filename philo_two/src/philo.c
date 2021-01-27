@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:37 by user42            #+#    #+#             */
-/*   Updated: 2020/10/09 01:38:05 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 01:31:39 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ static void		get_forks(t_params *p)
 	sem_wait(g_philo.protection[p->id]);
 	p->last_eaten = get_timestamp();
 	p->nbmeal++;
+	sem_post(g_philo.protection[p->id]);
 }
 
 static void		put_forks(t_params *p)
 {
+	(void) p;
 	sem_post(g_philo.forks);
 	sem_post(g_philo.forks);
-	sem_post(g_philo.protection[p->id]);
 }
 
 void			*a_philo(void *arg)
