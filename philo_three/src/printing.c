@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:31:35 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 15:57:46 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/27 21:10:41 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void			print_msg(unsigned int id, t_message msg)
 	offset++;
 	copy_msg(offset, msg);
 	write(1, g_philo.output, ft_strlen(g_philo.output));
+
 	if (msg != DIE)
 		sem_post(g_philo.print_mutex);
 }
