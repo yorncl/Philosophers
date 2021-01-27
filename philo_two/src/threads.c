@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2020/10/07 22:26:12 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 02:48:04 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,10 @@ static void		init_threads(void)
 	{
 		pthread_create(&g_philo.philosophers[i], NULL,
 						&a_philo, (void*)&g_philo.params[i]);
-		i++;
-	}
-	usleep(7500);
-	i = 0;
-	while (++i < g_philo.nb_philo)
-	{
-		pthread_create(&g_philo.philosophers[i], NULL,
-						&a_philo, (void*)&g_philo.params[i]);
-		i++;
-	}
-	i = -1;
-	while (++i < g_philo.nb_philo)
-	{
 		pthread_create(&g_philo.monitors[i], NULL,
 				&a_monitor, (void*)&g_philo.params[i]);
+		i++;
+		usleep(1000);
 	}
 }
 
