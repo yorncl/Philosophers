@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 18:00:04 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/27 20:54:49 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int		init_processes(void)
 			kill_processes();
 			return (1);
 		}
-		ft_sleep(8);
+		usleep(10);
 	}
 	return (0);
 }
