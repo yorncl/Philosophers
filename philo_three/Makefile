@@ -7,6 +7,7 @@ SRCS =	src/utils.c \
 		src/monitor.c \
 		src/printing.c \
 		src/processes.c \
+		src/sem.c \
 		src/main.c \
 
 HEADERS = inc/philo_three.h

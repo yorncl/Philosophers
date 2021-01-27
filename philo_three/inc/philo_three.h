@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_three.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2020/10/09 01:50:09 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:54:35 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@ int				ft_strlen(char *str);
 unsigned int	ft_atoi(char *s);
 unsigned int	get_timestamp(void);
 void			ft_sleep(unsigned int milis);
+void			ft_strcpy(char *dest, char *src);
+unsigned int	unsigned_copy(char *dest, unsigned long long int nb);
+unsigned int	ft_uintlen(unsigned long long int n);
+char			*get_name(unsigned int i);
+int				create_semaphores(void);
 
 void			launch_sim();
 

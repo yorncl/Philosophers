@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:28:59 by user42            #+#    #+#             */
-/*   Updated: 2020/09/21 18:34:39 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:57:48 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,11 @@ unsigned int	get_timestamp(void)
 	gettimeofday(&g_philo.time_now, 0);
 	return ((g_philo.time_now.tv_sec * 1000 + g_philo.time_now.tv_usec / 1000)
 			- g_philo.timestampstart);
+}
+
+void			ft_strcpy(char *dest, char *src)
+{
+	while (*src)
+		*dest++ = *src++;
+	*dest = 0;
 }

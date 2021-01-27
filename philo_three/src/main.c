@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 16:11:32 by user42            #+#    #+#             */
-/*   Updated: 2020/10/09 01:59:28 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/27 15:57:44 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ static int		are_numbers(int ac, char **av)
 
 static int		init_global(void)
 {
-	int i;
-
 	if ((g_philo.print_mutex = sem_open("prnt", O_CREAT, 777, 1)) == SEM_FAILED
 	|| sem_unlink("prnt")
 	|| (g_philo.isdying = sem_open("dying", O_CREAT, 777, 1)) == SEM_FAILED
@@ -63,11 +61,8 @@ static int		init_global(void)
 	|| (g_philo.protection = malloc(sizeof(sem_t*) * g_philo.nb_philo)) == 0)
 		return (1);
 	memset(g_philo.protection, 0, sizeof(sem_t*) * g_philo.nb_philo);
-	i = -1;
-	while (++i < g_philo.nb_philo)
-		if ((g_philo.protection[i] = sem_open("protecc",
-				O_CREAT, 777, 1)) == SEM_FAILED || sem_unlink("protecc"))
-			return (1);
+	if (create_semaphores())
+		return (1);
 	g_philo.philosophers = malloc(sizeof(pid_t) * g_philo.nb_philo);
 	g_philo.params = malloc(sizeof(t_params) * g_philo.nb_philo);
 	memset(g_philo.params, 0, sizeof(t_params) * g_philo.nb_philo);
