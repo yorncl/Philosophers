@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2021/01/28 14:34:04 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/28 14:39:45 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,13 @@ static void		init_params(void)
 	}
 }
 
-
-#include <stdio.h>
 static void		init_threads(void)
 {
 	int			i;
 
 	gettimeofday(&g_philo.time_now, 0);
-	g_philo.timestampstart = g_philo.time_now.tv_sec * 1000 + g_philo.time_now.tv_usec / 1000;
+	g_philo.timestampstart = g_philo.time_now.tv_sec * 1000
+		+ g_philo.time_now.tv_usec / 1000;
 	i = 0;
 	while (i < g_philo.nb_philo)
 	{

@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:31:35 by user42            #+#    #+#             */
-/*   Updated: 2021/01/28 14:09:39 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/28 14:50:05 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ static void		copy_msg(int offset, t_message msg)
 		ft_strcpy(g_philo.output + offset, "is sleeping\n");
 }
 
-#include <stdio.h>
-
 void			print_msg(unsigned int id, t_message msg)
 {
 	int offset;
@@ -73,7 +71,6 @@ void			print_msg(unsigned int id, t_message msg)
 		return ;
 	}
 	offset = 0;
-	// offset = unsigned_copy((char*)g_philo.output + offset, get_timestamp());
 	offset = unsigned_copy((char*)g_philo.output + offset, get_timestamp());
 	g_philo.output[offset] = ' ';
 	offset++;

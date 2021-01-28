@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 16:11:32 by user42            #+#    #+#             */
-/*   Updated: 2021/01/28 14:37:07 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/28 14:40:51 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int			create_semaphores(void)
 		name = get_name(i);
 		if ((g_philo.protection[i] = sem_open(name,
 				O_CREAT | O_EXCL, 777, 1)) == SEM_FAILED || sem_unlink(name))
-				{
-					free(name);
-					return (1);
-				}
+		{
+			free(name);
+			return (1);
+		}
 		free(name);
 	}
 	return (0);
