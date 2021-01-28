@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:31:35 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 21:40:10 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/28 13:55:33 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ unsigned int	unsigned_copy(char *dest, unsigned long long int nb)
 
 	size = ft_uintlen(nb);
 	i = size;
-	while (nb != 0)
+	while (i != 0)
 	{
 		dest[i - 1] = '0' + (nb % 10);
 		nb /= 10;

@@ -3,33 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   printing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:31:35 by user42            #+#    #+#             */
-/*   Updated: 2020/10/02 11:40:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/28 13:55:24 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo_one.h>
 
-static int		unsigned_copy(char *dest,
-							unsigned int nb)
+unsigned int	ft_uintlen(unsigned long long int n)
 {
-	int				i;
-	unsigned int	size;
-	unsigned int	tmp;
+	int size;
 
-	size = 1;
-	while (nb > (tmp = size * 10))
-		size = tmp;
-	i = 0;
-	while (size > 0)
+	if (n == 0)
+		return (1);
+	size = 0;
+	while (n != 0)
 	{
-		dest[i] = '0' + (nb / size % 10);
-		size /= 10;
-		i++;
+		n /= 10;
+		size++;
 	}
-	return (i);
+	return (size);
+}
+
+unsigned int	unsigned_copy(char *dest, unsigned long long int nb)
+{
+	unsigned int	size;
+	unsigned int	i;
+
+	size = ft_uintlen(nb);
+	i = size;
+	while (i != 0)
+	{
+		dest[i - 1] = '0' + (nb % 10);
+		nb /= 10;
+		i--;
+	}
+	return (size);
 }
 
 static void		ft_strcpy(char *dest, char *src)
