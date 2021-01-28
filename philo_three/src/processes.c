@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 21:40:16 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/28 15:15:30 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ static int		init_processes(void)
 	int			i;
 
 	gettimeofday(&g_philo.time_now, 0);
-	g_philo.timestampstart = get_timestamp();
+	g_philo.timestampstart = g_philo.time_now.tv_sec * 1000
+		+ g_philo.time_now.tv_usec / 1000;
 	i = -1;
 	while (++i < g_philo.nb_philo)
 	{
+		g_philo.params[i].last_eaten = g_philo.timestampstart;
 		if ((g_philo.philosophers[i] = fork()) == 0)
 			a_philo(&g_philo.params[i]);
 		else if (g_philo.philosophers[i] == -1)

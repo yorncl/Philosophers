@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/21 16:11:32 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 15:57:44 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/28 15:15:38 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int		init_global(void)
 	return (0);
 }
 
-static void		destroy_global(void)
+void			destroy_global(void)
 {
 	int i;
 

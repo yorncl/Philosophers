@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 13:51:13 by user42            #+#    #+#             */
-/*   Updated: 2021/01/27 15:54:35 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/28 15:05:11 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ unsigned int	unsigned_copy(char *dest, unsigned long long int nb);
 unsigned int	ft_uintlen(unsigned long long int n);
 char			*get_name(unsigned int i);
 int				create_semaphores(void);
+void			destroy_global(void);
 
 void			launch_sim();
 

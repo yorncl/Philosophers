@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:25:14 by user42            #+#    #+#             */
-/*   Updated: 2020/10/09 00:39:43 by user42           ###   ########.fr       */
+/*   Updated: 2021/01/28 15:02:25 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static void		init_threads(void)
 {
 	int			i;
 
-	g_philo.timestampstart = get_timestamp();
 	i = 0;
 	while (i < g_philo.nb_philo)
 	{
+		g_philo.params[i].last_eaten = g_philo.timestampstart;
 		pthread_create(&g_philo.philosophers[i], NULL,
 						&a_philo, (void*)&g_philo.params[i]);
 		pthread_create(&g_philo.monitors[i], NULL,
@@ -41,6 +41,7 @@ static void		init_threads(void)
 	i = 1;
 	while (i < g_philo.nb_philo)
 	{
+		g_philo.params[i].last_eaten = g_philo.timestampstart;
 		pthread_create(&g_philo.philosophers[i], NULL,
 						&a_philo, (void*)&g_philo.params[i]);
 		pthread_create(&g_philo.monitors[i], NULL,
@@ -64,6 +65,9 @@ static void		join_threads(void)
 void			launch_sim(void)
 {
 	init_params();
+	gettimeofday(&g_philo.time_now, 0);
+	g_philo.timestampstart = g_philo.time_now.tv_sec * 1000
+		+ g_philo.time_now.tv_usec / 1000;
 	init_threads();
 	join_threads();
 }
