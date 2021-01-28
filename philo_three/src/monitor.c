@@ -6,7 +6,7 @@
 /*   By: yorn <yorn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/03 11:30:43 by user42            #+#    #+#             */
-/*   Updated: 2021/01/28 15:05:49 by yorn             ###   ########.fr       */
+/*   Updated: 2021/01/28 17:22:41 by yorn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	*a_monitor(void *arg)
 		{
 			sem_wait(g_philo.isdying);
 			print_msg(p->id, DIE);
-			destroy_global();
 			exit(EXIT_DIED);
 		}
 		sem_post(g_philo.protection[p->id]);
